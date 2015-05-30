@@ -78,6 +78,7 @@ class ApacheVHostNodeTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @expectedException \Eps\VHostGeneratorBundle\Generator\Exception\ValidationException
+     * @expectedExceptionMessageRegExp /Invalid IP address or port number (.+:.+)/
      * @dataProvider invalidAddressesProvider
      */
     public function itShouldNotAllowToSetInvalidAddress($ipAddress, $port)

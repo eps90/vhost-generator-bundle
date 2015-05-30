@@ -72,7 +72,7 @@ class ApacheVHostNode implements NodeInterface
     public function setAddress($ipAddress, $port = 80)
     {
         if (!preg_match(self::IP_REGEXP, $ipAddress) || !preg_match(self::PORT_NUMBER_REGEXP, $port)) {
-            throw new ValidationException('Invalid IP address or port number');
+            throw new ValidationException('Invalid IP address or port number', $ipAddress . ':' . $port);
         }
 
         $this->attributes[self::ADDRESS] = $ipAddress . ':' . $port;
