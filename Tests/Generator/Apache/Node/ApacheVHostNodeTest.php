@@ -3,6 +3,8 @@
 namespace Eps\VhostGeneratorBundle\Tests\Generator\Apache\Node;
 
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\ApacheVHostNode;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\DocumentRootProperty;
+use org\bovigo\vfs\vfsStream;
 
 /**
  * Class ApacheVHostNodeTest
@@ -85,5 +87,81 @@ class ApacheVHostNodeTest extends \PHPUnit_Framework_TestCase
     {
         $vhostNode = new ApacheVHostNode();
         $vhostNode->setAddress($ipAddress, $port);
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldAllowToAddDocumentRootAsString()
+    {
+        $vhostNode = new ApacheVHostNode();
+
+        $structure = [
+            'srv' => [
+                'www' => [
+                    'myDir' => [
+                        'sample_file.php' => '<?php echo "OK"; ?>'
+                    ]
+                ]
+            ]
+        ];
+        $fileSystem = vfsStream::setup('root', null, $structure);
+        $filePath = $fileSystem->url() . '/srv/www/myDir';
+        $vhostNode->setDocumentRoot($filePath);
+        $parameters = $vhostNode->getConfiguration();
+
+        /** @var DocumentRootProperty $documentRoot */
+        $documentRoot = $parameters[DocumentRootProperty::NAME];
+        $this->assertInstanceOf(
+            'Eps\VhostGeneratorBundle\Generator\Apache\Property\DocumentRootProperty',
+            $documentRoot
+        );
+        $this->assertEquals($documentRoot->getValue(), $filePath);
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldAllowToAddDocumentRootAsObject()
+    {
+        $vhostNode = new ApacheVHostNode();
+
+        $structure = [
+            'srv' => [
+                'www' => [
+                    'myDir' => [
+                        'sample_file.php' => '<?php echo "OK"; ?>'
+                    ]
+                ]
+            ]
+        ];
+        $fileSystem = vfsStream::setup('root', null, $structure);
+        $filePath = $fileSystem->url() . '/srv/www/myDir';
+        $documentRootProp = new DocumentRootProperty($filePath);
+        $vhostNode->setDocumentRoot($documentRootProp);
+        $parameters = $vhostNode->getConfiguration();
+
+        /** @var DocumentRootProperty $documentRoot */
+        $documentRoot = $parameters[DocumentRootProperty::NAME];
+        $this->assertInstanceOf(
+            'Eps\VhostGeneratorBundle\Generator\Apache\Property\DocumentRootProperty',
+            $documentRoot
+        );
+        $this->assertEquals($documentRoot->getValue(), $filePath);
+    }
+
+    /**
+     * @test
+     * @expectedException \Eps\VHostGeneratorBundle\Generator\Exception\ValidationException
+     */
+    public function itShouldThrowIfDocumentRootIsInvalid()
+    {
+        $vhostNode = new ApacheVHostNode();
+        $documentRootProp = $this->getMock('Eps\VHostGeneratorBundle\Generator\Property\ValidatablePropertyInterface');
+        $documentRootProp->expects($this->once())
+            ->method('isValid')
+            ->willReturn(false);
+
+        $vhostNode->setDocumentRoot($documentRootProp);
     }
 }

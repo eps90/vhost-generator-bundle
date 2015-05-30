@@ -2,9 +2,11 @@
 
 namespace Eps\VhostGeneratorBundle\Generator\Apache\Node;
 
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\DocumentRootProperty;
 use Eps\VhostGeneratorBundle\Generator\Exception\ValidationException;
 use Eps\VhostGeneratorBundle\Generator\Node\NodeInterface;
 use Eps\VhostGeneratorBundle\Generator\Property\PropertyInterface;
+use Eps\VhostGeneratorBundle\Generator\Property\ValidatablePropertyInterface;
 
 /**
  * Class ApacheVHostNode
@@ -61,7 +63,7 @@ class ApacheVHostNode implements NodeInterface
      */
     public function getConfiguration()
     {
-        return [];
+        return $this->properties;
     }
 
     /**
@@ -82,5 +84,32 @@ class ApacheVHostNode implements NodeInterface
         $this->attributes[self::ADDRESS] = $ipAddress . ':' . $port;
 
         return $this;
+    }
+
+    /**
+     * @param string|PropertyInterface $documentRoot
+     * @return $this
+     */
+    public function setDocumentRoot($documentRoot)
+    {
+        if (!($documentRoot instanceof PropertyInterface)) {
+            $documentRoot = new DocumentRootProperty($documentRoot);
+        }
+
+        $this->addProperty(DocumentRootProperty::NAME, $documentRoot);
+
+        return $this;
+    }
+
+    private function addProperty($propertyName, $propertyObject)
+    {
+        if ($propertyObject instanceof ValidatablePropertyInterface && !$propertyObject->isValid()) {
+            throw new ValidationException(
+                'Property is invalid',
+                "{$propertyObject->getName()}={$propertyObject->getValue()}"
+            );
+        }
+
+        $this->properties[$propertyName] = $propertyObject;
     }
 }
