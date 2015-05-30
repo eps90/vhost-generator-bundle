@@ -7,7 +7,7 @@ namespace Eps\VhostGeneratorBundle\Generator\Property;
  * @package Eps\VhostGeneratorBundle\Generator\Property
  * @author Jakub Turek <ja@kubaturek.pl>
  */
-class Property implements PropertyInterface
+abstract class Property implements PropertyInterface
 {
     protected $name;
     protected $value;

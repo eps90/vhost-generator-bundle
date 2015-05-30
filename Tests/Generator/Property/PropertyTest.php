@@ -21,7 +21,10 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
      */
     public function before()
     {
-        $this->property = new Property('PROPERTY_NAME', 'PROPERTY_VALUE');
+        $this->property = $this->getMockForAbstractClass(
+            'Eps\VhostGeneratorBundle\Generator\Property\Property',
+            ['PROPERTY_NAME', 'PROPERTY_VALUE']
+        );
     }
 
     /**
