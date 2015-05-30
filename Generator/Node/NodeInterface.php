@@ -31,5 +31,5 @@ interface NodeInterface
      *
      * @return array
      */
-    public function getConfiguration();
+    public function getProperties();
 }

@@ -108,7 +108,7 @@ class ApacheVHostNodeTest extends \PHPUnit_Framework_TestCase
         $fileSystem = vfsStream::setup('root', null, $structure);
         $filePath = $fileSystem->url() . '/srv/www/myDir';
         $vhostNode->setDocumentRoot($filePath);
-        $parameters = $vhostNode->getConfiguration();
+        $parameters = $vhostNode->getProperties();
 
         /** @var DocumentRootProperty $documentRoot */
         $documentRoot = $parameters[DocumentRootProperty::NAME];
@@ -139,7 +139,7 @@ class ApacheVHostNodeTest extends \PHPUnit_Framework_TestCase
         $filePath = $fileSystem->url() . '/srv/www/myDir';
         $documentRootProp = new DocumentRootProperty($filePath);
         $vhostNode->setDocumentRoot($documentRootProp);
-        $parameters = $vhostNode->getConfiguration();
+        $parameters = $vhostNode->getProperties();
 
         /** @var DocumentRootProperty $documentRoot */
         $documentRoot = $parameters[DocumentRootProperty::NAME];

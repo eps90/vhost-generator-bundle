@@ -61,7 +61,7 @@ class ApacheVHostNode implements NodeInterface
     /**
      * {@inheritdoc}
      */
-    public function getConfiguration()
+    public function getProperties()
     {
         return $this->properties;
     }
