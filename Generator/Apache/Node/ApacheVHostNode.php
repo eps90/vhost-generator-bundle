@@ -87,6 +87,8 @@ class ApacheVHostNode implements NodeInterface
     }
 
     /**
+     * Sets the document root of Apache VHost
+     *
      * @param string|PropertyInterface $documentRoot
      * @return $this
      */

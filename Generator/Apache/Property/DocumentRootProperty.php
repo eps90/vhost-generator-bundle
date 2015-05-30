@@ -18,7 +18,6 @@ class DocumentRootProperty implements ValidatablePropertyInterface
 
     /**
      * @param string $documentRoot
-     * @throws ValidationException
      */
     public function __construct($documentRoot)
     {
