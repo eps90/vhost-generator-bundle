@@ -1,0 +1,26 @@
+{
+    "name": "eps90/vhost-generator-bundle",
+    "require": {
+        "symfony/framework-bundle": "~2.6",
+        "symfony/process": "~2.6",
+        "symfony/finder": "~2.6",
+        "symfony/console": "~2.6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.6"
+    },
+    "authors": [
+        {
+            "name": "Jakub Turek",
+            "email": "ja@kubaturek.pl"
+        }
+    ],
+    "autoload": {
+      "psr-4": {
+        "Eps\\VhostGeneratorBundle\\": ""
+      }
+    },
+    "config": {
+      "bin-dir": "bin"
+    }
+}
