@@ -77,5 +77,9 @@ class DocumentRootPropertyTest extends \PHPUnit_Framework_TestCase
         $invalidFilePath = 'some/invalid/path';
         $property = new DocumentRootProperty($invalidFilePath);
         $this->assertFalse($property->isValid());
+
+        $invalidFilePath = ['some/invalid/path'];
+        $property = new DocumentRootProperty($invalidFilePath);
+        $this->assertFalse($property->isValid());
     }
 }

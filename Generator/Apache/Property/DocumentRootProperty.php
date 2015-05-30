@@ -50,6 +50,6 @@ class DocumentRootProperty implements ValidatablePropertyInterface
      */
     public function isValid()
     {
-        return file_exists($this->value);
+        return is_string($this->value) && file_exists($this->value);
     }
 }
