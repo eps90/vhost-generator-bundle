@@ -7,7 +7,7 @@ namespace Eps\VhostGeneratorBundle\Generator\Property;
  * @package Eps\VhostGeneratorBundle\Generator\Property
  * @author Jakub Turek <ja@kubaturek.pl>
  */
-interface ValidatablePropertyInterface
+interface ValidatablePropertyInterface extends PropertyInterface
 {
     /**
      * Determines whether property value is valid

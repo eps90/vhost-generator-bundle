@@ -4,6 +4,7 @@ namespace Eps\VhostGeneratorBundle\Generator\Apache\Node;
 
 use Eps\VhostGeneratorBundle\Generator\Exception\ValidationException;
 use Eps\VhostGeneratorBundle\Generator\Node\NodeInterface;
+use Eps\VhostGeneratorBundle\Generator\Property\PropertyInterface;
 
 /**
  * Class ApacheVHostNode
@@ -34,6 +35,9 @@ class ApacheVHostNode implements NodeInterface
         self::ADDRESS => '*:80'
     ];
 
+    /**
+     * @var PropertyInterface[]
+     */
     protected $properties = [];
 
     /**

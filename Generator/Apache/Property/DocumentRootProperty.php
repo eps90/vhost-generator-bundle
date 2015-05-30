@@ -3,7 +3,6 @@
 namespace Eps\VhostGeneratorBundle\Generator\Apache\Property;
 
 use Eps\VhostGeneratorBundle\Generator\Exception\ValidationException;
-use Eps\VhostGeneratorBundle\Generator\Property\PropertyInterface;
 use Eps\VhostGeneratorBundle\Generator\Property\ValidatablePropertyInterface;
 
 /**
@@ -11,7 +10,7 @@ use Eps\VhostGeneratorBundle\Generator\Property\ValidatablePropertyInterface;
  * @package Eps\VhostGeneratorBundle\Generator\Apache\Property
  * @author Jakub Turek <ja@kubaturek.pl>
  */
-class DocumentRootProperty implements PropertyInterface, ValidatablePropertyInterface
+class DocumentRootProperty implements ValidatablePropertyInterface
 {
     protected $value;
 
