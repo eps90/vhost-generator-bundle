@@ -12,6 +12,8 @@ use Eps\VhostGeneratorBundle\Generator\Property\ValidatablePropertyInterface;
  */
 class DocumentRootProperty implements ValidatablePropertyInterface
 {
+    const NAME = 'DocumentRoot';
+
     protected $value;
 
     /**
@@ -30,7 +32,7 @@ class DocumentRootProperty implements ValidatablePropertyInterface
      */
     public function getName()
     {
-        return 'DocumentRoot';
+        return self::NAME;
     }
 
     /**
