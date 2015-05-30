@@ -2,6 +2,11 @@
 
 namespace Eps\VhostGeneratorBundle\Generator\Exception;
 
+/**
+ * Class ValidationException
+ * @package Eps\VhostGeneratorBundle\Generator\Exception
+ * @author Jakub Turek <ja@kubaturek.pl>
+ */
 class ValidationException extends \Exception
 {
     /**
