@@ -149,19 +149,4 @@ class ApacheVHostNodeTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals($documentRoot->getValue(), $filePath);
     }
-
-    /**
-     * @test
-     * @expectedException \Eps\VHostGeneratorBundle\Generator\Exception\ValidationException
-     */
-    public function itShouldThrowIfDocumentRootIsInvalid()
-    {
-        $vhostNode = new ApacheVHostNode();
-        $documentRootProp = $this->getMock('Eps\VHostGeneratorBundle\Generator\Property\ValidatablePropertyInterface');
-        $documentRootProp->expects($this->once())
-            ->method('isValid')
-            ->willReturn(false);
-
-        $vhostNode->setDocumentRoot($documentRootProp);
-    }
 }
