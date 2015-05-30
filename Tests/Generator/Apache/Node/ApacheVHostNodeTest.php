@@ -4,6 +4,7 @@ namespace Eps\VhostGeneratorBundle\Tests\Generator\Apache\Node;
 
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\ApacheVHostNode;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\DocumentRootProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\ServerNameProperty;
 use org\bovigo\vfs\vfsStream;
 
 /**
@@ -148,5 +149,34 @@ class ApacheVHostNodeTest extends \PHPUnit_Framework_TestCase
             $documentRoot
         );
         $this->assertEquals($documentRoot->getValue(), $filePath);
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldAllowToSetServerName()
+    {
+        $serverNameProp = 'www.example.com';
+        $vhostName = new ApacheVHostNode();
+        $vhostName->setServerName($serverNameProp);
+
+        /** @var ServerNameProperty $serverName */
+        $serverName = $vhostName->getProperties()[ServerNameProperty::NAME];
+        $this->assertInstanceOf(
+            'Eps\VhostGeneratorBundle\Generator\Apache\Property\ServerNameProperty',
+            $serverName
+        );
+        $this->assertEquals($serverName->getValue(), $serverNameProp);
+    }
+
+    /**
+     * @test
+     * @expectedException \Eps\VHostGeneratorBundle\Generator\Exception\ValidationException
+     */
+    public function itShouldThrowIfServerNameIsInvalid()
+    {
+        $serverNameProp = 'ggdsgdsgdsgd';
+        $vhostName = new ApacheVHostNode();
+        $vhostName->setServerName($serverNameProp);
     }
 }

@@ -3,6 +3,7 @@
 namespace Eps\VhostGeneratorBundle\Generator\Apache\Node;
 
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\DocumentRootProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\ServerNameProperty;
 use Eps\VhostGeneratorBundle\Generator\Exception\ValidationException;
 use Eps\VhostGeneratorBundle\Generator\Node\NodeInterface;
 use Eps\VhostGeneratorBundle\Generator\Property\PropertyInterface;
@@ -99,6 +100,23 @@ class ApacheVHostNode implements NodeInterface
         }
 
         $this->addProperty(DocumentRootProperty::NAME, $documentRoot);
+
+        return $this;
+    }
+
+    /**
+     * Sets the server name of Apache Vhost
+     *
+     * @param string|PropertyInterface $serverName
+     * @return $this
+     */
+    public function setServerName($serverName)
+    {
+        if (!($serverName instanceof PropertyInterface)) {
+            $serverName = new ServerNameProperty($serverName);
+        }
+
+        $this->addProperty(ServerNameProperty::NAME, $serverName);
 
         return $this;
     }
