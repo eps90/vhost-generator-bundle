@@ -16,9 +16,147 @@ class AllowOverridePropertyTest extends \PHPUnit_Framework_TestCase
      */
     public function itShouldHaveValidName()
     {
-        $property = new AllowOverrideProperty(null);
+        $property = new AllowOverrideProperty([]);
         $expectedName = 'AllowOverride';
         $actualName = $property->getName();
         $this->assertEquals($expectedName, $actualName);
+    }
+
+    public function validOptionsProvider()
+    {
+        return [
+            [AllowOverrideProperty::ALL],
+            [AllowOverrideProperty::NONE],
+            [AllowOverrideProperty::AUTH_CONFIG],
+            [AllowOverrideProperty::FILE_INFO],
+            [AllowOverrideProperty::INDEXES],
+            [AllowOverrideProperty::LIMIT],
+            [AllowOverrideProperty::NONFATAL_ALL],
+            [AllowOverrideProperty::NONFATAL_UNKNOWN],
+            [AllowOverrideProperty::NONFATAL_OVERRIDE]
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider validOptionsProvider
+     */
+    public function itShouldAllowToSetValidOptions($option)
+    {
+        $property = new AllowOverrideProperty([$option]);
+        $actual = $property->getOptions();
+        $expected = [
+            $option
+        ];
+        $this->assertEquals($expected, $actual);
+        $this->assertTrue($property->isValid());
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldCheckWhetherValuesAreInvalid()
+    {
+        $options = [
+            'SomeNonExistingOption'
+        ];
+        $property = new AllowOverrideProperty($options);
+        $this->assertFalse($property->isValid());
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldFilterOutAllValuesButAllIfOptionsContainAll()
+    {
+        $options = [
+            AllowOverrideProperty::INDEXES,
+            AllowOverrideProperty::AUTH_CONFIG,
+            AllowOverrideProperty::ALL
+        ];
+
+        $property = new AllowOverrideProperty($options);
+        $expected = [
+            AllowOverrideProperty::ALL
+        ];
+        $actual = $property->getOptions();
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldFilterOutAllValuesButNoneIfOptionsContainNone()
+    {
+        $options = [
+            AllowOverrideProperty::INDEXES,
+            AllowOverrideProperty::AUTH_CONFIG,
+            AllowOverrideProperty::NONE
+        ];
+
+        $property = new AllowOverrideProperty($options);
+        $expected = [
+            AllowOverrideProperty::NONE
+        ];
+        $actual = $property->getOptions();
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldContainAllOptionIfAllAndNoneProvided()
+    {
+        $options = [
+            AllowOverrideProperty::INDEXES,
+            AllowOverrideProperty::AUTH_CONFIG,
+            AllowOverrideProperty::NONE,
+            AllowOverrideProperty::ALL
+        ];
+
+        $property = new AllowOverrideProperty($options);
+        $expected = [
+            AllowOverrideProperty::ALL
+        ];
+        $actual = $property->getOptions();
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function optionsStringProvider()
+    {
+        return [
+            [
+                'options' => [
+                    AllowOverrideProperty::AUTH_CONFIG,
+                    AllowOverrideProperty::INDEXES
+                ],
+                'optionsString' => 'AuthConfig Indexes'
+            ],
+            [
+                'options' => [
+                    AllowOverrideProperty::INDEXES,
+                    AllowOverrideProperty::ALL
+                ],
+                'optionsString' => 'All'
+            ],
+            [
+                'options' => [
+                    AllowOverrideProperty::INDEXES,
+                    AllowOverrideProperty::NONE
+                ],
+                'optionsString' => 'None'
+            ]
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider optionsStringProvider
+     */
+    public function itShouldRenderOptionsAsString($options, $expected)
+    {
+        $property = new AllowOverrideProperty($options);
+        $actual = $property->getValue();
+        $this->assertEquals($expected, $actual);
     }
 }
