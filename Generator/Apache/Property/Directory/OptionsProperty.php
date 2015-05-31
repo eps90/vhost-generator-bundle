@@ -8,6 +8,7 @@ use Eps\VhostGeneratorBundle\Generator\Property\ValidatablePropertyInterface;
  * Class OptionsProperty
  * @package Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory
  * @author Jakub Turek <ja@kubaturek.pl>
+ * @todo In case when string is input, try to detect correct value from acceptable ones
  */
 class OptionsProperty implements ValidatablePropertyInterface
 {
