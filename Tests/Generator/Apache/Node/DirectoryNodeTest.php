@@ -3,6 +3,7 @@
 namespace Eps\VhostGeneratorBundle\Tests\Generator\Apache\Node;
 
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\DirectoryNode;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\OptionsProperty;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 
@@ -72,5 +73,55 @@ class DirectoryNodeTest extends \PHPUnit_Framework_TestCase
         $invalidPath = '/non/existing/path';
         $node = new DirectoryNode();
         $node->setDirectoryPath($invalidPath);
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldAllowToSetOptions()
+    {
+        $options = [
+            OptionsProperty::ALL
+        ];
+        $node = new DirectoryNode();
+        $node->setOptions($options);
+
+        $expectedOptions = 'All';
+        /** @var OptionsProperty $actualOptions */
+        $actualOptions = $node->getProperties()[OptionsProperty::NAME];
+        $this->assertInstanceOf(
+            'Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\OptionsProperty',
+            $actualOptions
+        );
+        $this->assertEquals($expectedOptions, $actualOptions->getValue());
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldAllowToSetOptionsObject()
+    {
+        $optionsValues = [
+            OptionsProperty::INCLUDES_NO_EXEC
+        ];
+        $options = new OptionsProperty($optionsValues);
+        $node = new DirectoryNode();
+        $node->setOptions($options);
+        $actualOptions = $node->getProperties()[OptionsProperty::NAME];
+        $this->assertEquals($options, $actualOptions);
+    }
+
+    /**
+     * @test
+     * @expectedException \Eps\VhostGeneratorBundle\Generator\Exception\ValidationException
+     */
+    public function itShouldThrowIfOptionsAreInvalid()
+    {
+        $options = $this->getMock('Eps\VhostGeneratorBundle\Generator\Property\ValidatablePropertyInterface');
+        $options->expects($this->once())
+            ->method('isValid')
+            ->willReturn(false);
+        $node = new DirectoryNode();
+        $node->setOptions($options);
     }
 }
