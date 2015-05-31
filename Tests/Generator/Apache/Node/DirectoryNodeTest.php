@@ -3,6 +3,7 @@
 namespace Eps\VhostGeneratorBundle\Tests\Generator\Apache\Node;
 
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\DirectoryNode;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowOverrideProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\OptionsProperty;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
@@ -127,5 +128,60 @@ class DirectoryNodeTest extends \PHPUnit_Framework_TestCase
             ->willReturn(false);
         $node = new DirectoryNode();
         $node->setOptions($options);
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldAllowToSetAllowOverrideProperty()
+    {
+        $options = [
+            AllowOverrideProperty::ALL
+        ];
+        $node = new DirectoryNode();
+        $node->setAllowOverride($options);
+
+        /** @var AllowOverrideProperty $actual */
+        $actual = $node->getProperties()[AllowOverrideProperty::NAME];
+        $this->assertInstanceOf(
+            'Eps\VHostGeneratorBundle\Generator\Apache\Property\Directory\AllowOverrideProperty',
+            $actual
+        );
+        $this->assertEquals('All', $actual->getValue());
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldAllowToSetAllowOverridePropertyAsObject()
+    {
+        $optionsValue = [
+            AllowOverrideProperty::ALL
+        ];
+        $options = new AllowOverrideProperty($optionsValue);
+        $node = new DirectoryNode();
+        $node->setAllowOverride($options);
+
+        /** @var AllowOverrideProperty $actual */
+        $actual = $node->getProperties()[AllowOverrideProperty::NAME];;
+        $this->assertEquals($options, $actual);
+    }
+
+    /**
+     * @test
+     * @expectedException \Eps\VhostGeneratorBundle\Generator\Exception\ValidationException
+     */
+    public function itShouldThrowIfAllowOverrideValueIsInvalid()
+    {
+        $options = $this->getMockBuilder(
+            'Eps\VHostGeneratorBundle\Generator\Apache\Property\Directory\AllowOverrideProperty'
+        )
+            ->disableOriginalConstructor()
+            ->getMock();
+        $options->expects($this->once())
+            ->method('isValid')
+            ->willReturn(false);
+        $node = new DirectoryNode();
+        $node->setAllowOverride($options);
     }
 }

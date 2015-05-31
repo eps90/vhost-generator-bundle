@@ -2,6 +2,7 @@
 
 namespace Eps\VhostGeneratorBundle\Generator\Apache\Node;
 
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowOverrideProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\OptionsProperty;
 use Eps\VhostGeneratorBundle\Generator\Exception\ValidationException;
 use Eps\VhostGeneratorBundle\Generator\Node\NodeInterface;
@@ -83,5 +84,22 @@ class DirectoryNode implements NodeInterface
         }
 
         $this->addProperty(OptionsProperty::NAME, $options, $this->properties);
+    }
+
+    /**
+     * Sets the AllowOverride property
+     *
+     * @param array|AllowOverrideProperty $options
+     * @return self
+     */
+    public function setAllowOverride($options)
+    {
+        if (!($options instanceof AllowOverrideProperty)) {
+           $options = new AllowOverrideProperty($options);
+        }
+
+        $this->addProperty(AllowOverrideProperty::NAME, $options, $this->properties);
+
+        return $this;
     }
 }
