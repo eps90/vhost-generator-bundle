@@ -2,6 +2,8 @@
 
 namespace Eps\VhostGeneratorBundle\Generator\Node;
 
+use Eps\VhostGeneratorBundle\Generator\Property\PropertyInterface;
+
 /**
  * Interface NodeInterface
  * @package Eps\VhostGeneratorBundle\Generator\Node
@@ -29,7 +31,7 @@ interface NodeInterface
     /**
      * Returns the key-value array with node configuration.
      *
-     * @return array
+     * @return PropertyInterface[]
      */
     public function getProperties();
 
