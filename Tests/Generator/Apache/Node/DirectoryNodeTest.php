@@ -5,6 +5,7 @@ namespace Eps\VhostGeneratorBundle\Tests\Generator\Apache\Node;
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\DirectoryNode;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowOverrideProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\OptionsProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\RequireProperty;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 
@@ -183,5 +184,23 @@ class DirectoryNodeTest extends \PHPUnit_Framework_TestCase
             ->willReturn(false);
         $node = new DirectoryNode();
         $node->setAllowOverride($options);
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldAllowToAddRequireOption()
+    {
+        $requireProperty = 'all granted';
+        $node = new DirectoryNode();
+        $node->setRequire($requireProperty);
+
+        /** @var RequireProperty $require */
+        $require = $node->getProperties()[RequireProperty::NAME];
+        $this->assertInstanceOf(
+            'Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\RequireProperty',
+            $require
+        );
+        $this->assertEquals($requireProperty, $require->getValue());
     }
 }
