@@ -49,8 +49,8 @@ class ApacheVHostFormatter implements ConfigurationFormatterInterface
         }
 
         if (!empty($nodeNodes)) {
-            $result .= PHP_EOL;
             foreach ($nodeNodes as $innerNode) {
+                $result .= PHP_EOL;
                 $result .= $this->renderNode($innerNode, $innerIndentationCount);
             }
         }
