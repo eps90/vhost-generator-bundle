@@ -92,7 +92,7 @@ class ApacheVHostNode implements NodeInterface
      * Sets the document root of Apache VHost
      *
      * @param string|PropertyInterface $documentRoot
-     * @return $this
+     * @return self
      */
     public function setDocumentRoot($documentRoot)
     {
@@ -109,7 +109,7 @@ class ApacheVHostNode implements NodeInterface
      * Sets the server name of Apache VHost
      *
      * @param string|PropertyInterface $serverName
-     * @return $this
+     * @return self
      */
     public function setServerName($serverName)
     {
@@ -125,8 +125,8 @@ class ApacheVHostNode implements NodeInterface
     /**
      * Sets the server alias of Apache VHost
      *
-     * @param $serverAlias
-     * @return $this
+     * @param string|PropertyInterface $serverAlias
+     * @return self
      */
     public function setServerAlias($serverAlias)
     {
