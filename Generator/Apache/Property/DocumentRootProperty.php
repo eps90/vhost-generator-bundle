@@ -2,7 +2,6 @@
 
 namespace Eps\VhostGeneratorBundle\Generator\Apache\Property;
 
-use Eps\VhostGeneratorBundle\Generator\Exception\ValidationException;
 use Eps\VhostGeneratorBundle\Generator\Property\ValidatablePropertyInterface;
 
 /**
