@@ -22,23 +22,43 @@ class ServerNamePropertyTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    /**
-     * @test
-     */
-    public function itShouldHasValidValue()
+    public function validServerNameProvider()
     {
-        $serverName = 'www.example.com';
-        $property = new ServerNameProperty($serverName);
-        $this->assertSame($serverName, $property->getValue());
-        $this->assertTrue($property->isValid());
+        return [
+            ['example.com'],
+            ['www.example.com'],
+            ['localhost'],
+            ['*.example.com']
+        ];
     }
 
     /**
      * @test
+     * @dataProvider validServerNameProvider
      */
-    public function itShouldDetermineWhetherValueIsValid()
+    public function itShouldHasValidValue($validServerName)
     {
-        $invalidServerName = 'kjfdkljfs';
+        $property = new ServerNameProperty($validServerName);
+        $this->assertSame($validServerName, $property->getValue());
+        $this->assertTrue($property->isValid());
+    }
+
+    public function invalidServerNameProvider()
+    {
+        return [
+            [['kjklfj']],
+            [null],
+            [new \stdClass],
+            ['']
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider invalidServerNameProvider
+     */
+    public function itShouldDetermineWhetherValueIsValid($invalidServerName)
+    {
         $property = new ServerNameProperty($invalidServerName);
         $this->assertFalse($property->isValid());
     }

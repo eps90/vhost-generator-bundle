@@ -8,11 +8,6 @@ class ServerNameProperty implements ValidatablePropertyInterface
 {
     const NAME = 'ServerName';
 
-    /**
-     * Regexp for valid www addresses
-     */
-    const WWW_ADDRESS_REGEXP = '/^([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/';
-
     protected $value;
 
     public function __construct($serverName)
@@ -41,6 +36,6 @@ class ServerNameProperty implements ValidatablePropertyInterface
      */
     public function isValid()
     {
-        return is_string($this->value) && preg_match(self::WWW_ADDRESS_REGEXP, $this->value);
+        return is_string($this->value) && !empty($this->value);
     }
 }
