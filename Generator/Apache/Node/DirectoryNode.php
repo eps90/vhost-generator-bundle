@@ -144,6 +144,6 @@ class DirectoryNode implements NodeInterface
      */
     public function getNodes()
     {
-        // TODO: Implement getNodes() method.
+        return [];
     }
 }

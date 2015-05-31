@@ -250,4 +250,15 @@ class DirectoryNodeTest extends \PHPUnit_Framework_TestCase
         $allow = $node->getProperties()[AllowProperty::NAME];
         $this->assertEquals($allowProperty, $allow);
     }
+
+    /**
+     * @test
+     */
+    public function itShouldNotHaveAnyNodes()
+    {
+        $node = new DirectoryNode();
+        $actual = $node->getNodes();
+        $this->assertInternalType('array', $actual);
+        $this->assertEmpty($actual);
+    }
 }
