@@ -3,6 +3,7 @@
 namespace Eps\VhostGeneratorBundle\Tests\Generator\Apache\Node;
 
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\ApacheVHostNode;
+use Eps\VhostGeneratorBundle\Generator\Apache\Node\DirectoryNode;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\DocumentRootProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerAliasProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerNameProperty;
@@ -243,5 +244,18 @@ class ApacheVHostNodeTest extends \PHPUnit_Framework_TestCase
 
         $vhostName = new ApacheVHostNode();
         $vhostName->setServerAlias($serverNameProp);
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldBeAbleToAddDirectoryNode()
+    {
+        $node = new ApacheVHostNode();
+        $directoryNode = new DirectoryNode();
+        $node->addDirectoryNode($directoryNode);
+        $expected = [$directoryNode];
+        $actual = $node->getNodes();
+        $this->assertEquals($expected, $actual);
     }
 }

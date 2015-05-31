@@ -42,9 +42,14 @@ class ApacheVHostNode implements NodeInterface
     ];
 
     /**
-     * @var PropertyInterface[]
+     * @var PropertyInterface[] VHost properties
      */
     protected $properties = [];
+
+    /**
+     * @var DirectoryNode[] VHost directory nodes
+     */
+    protected $nodes = [];
 
     /**
      * {@inheritdoc}
@@ -146,6 +151,19 @@ class ApacheVHostNode implements NodeInterface
      */
     public function getNodes()
     {
-        // TODO: Implement getNodes() method.
+        return $this->nodes;
+    }
+
+    /**
+     * Adds a DirectoryNode to Apache VHost
+     *
+     * @param DirectoryNode $directoryNode
+     * @return $this
+     */
+    public function addDirectoryNode(DirectoryNode $directoryNode)
+    {
+        array_push($this->nodes, $directoryNode);
+
+        return $this;
     }
 }
