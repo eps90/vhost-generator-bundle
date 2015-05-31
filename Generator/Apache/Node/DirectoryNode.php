@@ -15,6 +15,8 @@ use Eps\VhostGeneratorBundle\Generator\Property\ValidatablePropertyInterface;
  */
 class DirectoryNode implements NodeInterface
 {
+    use NodeHelperTrait;
+
     const DIRECTORY_PATH = 'path';
 
     /**
@@ -80,18 +82,6 @@ class DirectoryNode implements NodeInterface
             $options = new OptionsProperty($options);
         }
 
-        $this->addProperty(OptionsProperty::NAME, $options);
-    }
-
-    private function addProperty($propertyName, $propertyObject)
-    {
-        if ($propertyObject instanceof ValidatablePropertyInterface && !$propertyObject->isValid()) {
-            throw new ValidationException(
-                'Property is invalid',
-                "{$propertyObject->getName()}={$propertyObject->getValue()}"
-            );
-        }
-
-        $this->properties[$propertyName] = $propertyObject;
+        $this->addProperty(OptionsProperty::NAME, $options, $this->properties);
     }
 }

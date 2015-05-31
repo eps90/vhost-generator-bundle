@@ -17,6 +17,8 @@ use Eps\VhostGeneratorBundle\Generator\Property\ValidatablePropertyInterface;
  */
 class ApacheVHostNode implements NodeInterface
 {
+    use NodeHelperTrait;
+
     /**
      * Address and port for Apache VHost in format: [ADDRESS]:[PORT]
      */
@@ -100,7 +102,7 @@ class ApacheVHostNode implements NodeInterface
             $documentRoot = new DocumentRootProperty($documentRoot);
         }
 
-        $this->addProperty(DocumentRootProperty::NAME, $documentRoot);
+        $this->addProperty(DocumentRootProperty::NAME, $documentRoot, $this->properties);
 
         return $this;
     }
@@ -117,7 +119,7 @@ class ApacheVHostNode implements NodeInterface
             $serverName = new ServerNameProperty($serverName);
         }
 
-        $this->addProperty(ServerNameProperty::NAME, $serverName);
+        $this->addProperty(ServerNameProperty::NAME, $serverName, $this->properties);
 
         return $this;
     }
@@ -134,20 +136,8 @@ class ApacheVHostNode implements NodeInterface
             $serverAlias = new ServerAliasProperty($serverAlias);
         }
 
-        $this->addProperty(ServerAliasProperty::NAME, $serverAlias);
+        $this->addProperty(ServerAliasProperty::NAME, $serverAlias, $this->properties);
 
         return $this;
-    }
-
-    private function addProperty($propertyName, $propertyObject)
-    {
-        if ($propertyObject instanceof ValidatablePropertyInterface && !$propertyObject->isValid()) {
-            throw new ValidationException(
-                'Property is invalid',
-                "{$propertyObject->getName()}={$propertyObject->getValue()}"
-            );
-        }
-
-        $this->properties[$propertyName] = $propertyObject;
     }
 }
