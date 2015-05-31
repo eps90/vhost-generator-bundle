@@ -138,4 +138,12 @@ class DirectoryNode implements NodeInterface
 
         return $this;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getNodes()
+    {
+        // TODO: Implement getNodes() method.
+    }
 }

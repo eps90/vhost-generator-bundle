@@ -32,4 +32,11 @@ interface NodeInterface
      * @return array
      */
     public function getProperties();
+
+    /**
+     * Returns nested nodes that belong to the node
+     *
+     * @return NodeInterface[]
+     */
+    public function getNodes();
 }
