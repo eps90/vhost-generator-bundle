@@ -13,22 +13,49 @@ class OptionsProperty implements ValidatablePropertyInterface
 {
     const NAME = 'Options';
 
+    /**
+     * Enable all options
+     */
     const ALL = 'All';
 
+    /**
+     * Disable all options
+     */
     const NONE = 'None';
 
+    /**
+     * Enable execution of CGI scripts
+     */
     const EXEC_GGI = 'ExecCGI';
 
+    /**
+     * Enable following symbolic links
+     */
     const FOLLOW_SYM_LINKS = 'FollowSymLinks';
 
+    /**
+     * Enable server-side includes
+     */
     const INCLUDES = 'Includes';
 
+    /**
+     * Enable server-side includes but disable the exec cmd and exec cgi
+     */
     const INCLUDES_NO_EXEC = 'IncludesNOEXEC';
 
+    /**
+     * Enable indexes
+     */
     const INDEXES = 'Indexes';
 
+    /**
+     * Enable content negotiated "MultiViews"
+     */
     const MULTI_VIEWS = 'MultiViews';
 
+    /**
+     * Enable SymLinksIfOwnerMatch
+     */
     const SYM_LINKS_IF_OWNER_MATCH = 'SymLinksIfOwnerMatch';
 
     /**
@@ -100,7 +127,7 @@ class OptionsProperty implements ValidatablePropertyInterface
     }
 
     /**
-     * Returns array of values
+     * Returns array of options
      *
      * @return array
      */
