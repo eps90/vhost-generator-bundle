@@ -4,6 +4,7 @@ namespace Eps\VhostGeneratorBundle\Tests\Generator\Apache\Node;
 
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\ApacheVHostNode;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\DocumentRootProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\ServerAliasProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\ServerNameProperty;
 use org\bovigo\vfs\vfsStream;
 
@@ -197,5 +198,38 @@ class ApacheVHostNodeTest extends \PHPUnit_Framework_TestCase
 
         $vhostName = new ApacheVHostNode();
         $vhostName->setServerName($serverNameProp);
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldAllowToSetServerAlias()
+    {
+        $serverNameProp = 'www.example.com';
+        $vhostName = new ApacheVHostNode();
+        $vhostName->setServerAlias($serverNameProp);
+
+        /** @var ServerNameProperty $serverName */
+        $serverName = $vhostName->getProperties()[ServerAliasProperty::NAME];
+        $this->assertInstanceOf(
+            'Eps\VhostGeneratorBundle\Generator\Apache\Property\ServerAliasProperty',
+            $serverName
+        );
+        $this->assertEquals($serverName->getValue(), $serverNameProp);
+    }
+
+    /**
+     * @test
+     * @expectedException \Eps\VHostGeneratorBundle\Generator\Exception\ValidationException
+     */
+    public function itShouldThrowIfServerAliasPropertyIsNotValid()
+    {
+        $serverNameProp = $this->getMock('Eps\VHostGeneratorBundle\Generator\Property\ValidatablePropertyInterface');
+        $serverNameProp->expects($this->once())
+            ->method('isValid')
+            ->willReturn(false);
+
+        $vhostName = new ApacheVHostNode();
+        $vhostName->setServerAlias($serverNameProp);
     }
 }

@@ -3,6 +3,7 @@
 namespace Eps\VhostGeneratorBundle\Generator\Apache\Node;
 
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\DocumentRootProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\ServerAliasProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\ServerNameProperty;
 use Eps\VhostGeneratorBundle\Generator\Exception\ValidationException;
 use Eps\VhostGeneratorBundle\Generator\Node\NodeInterface;
@@ -105,7 +106,7 @@ class ApacheVHostNode implements NodeInterface
     }
 
     /**
-     * Sets the server name of Apache Vhost
+     * Sets the server name of Apache VHost
      *
      * @param string|PropertyInterface $serverName
      * @return $this
@@ -117,6 +118,23 @@ class ApacheVHostNode implements NodeInterface
         }
 
         $this->addProperty(ServerNameProperty::NAME, $serverName);
+
+        return $this;
+    }
+
+    /**
+     * Sets the server alias of Apache VHost
+     *
+     * @param $serverAlias
+     * @return $this
+     */
+    public function setServerAlias($serverAlias)
+    {
+        if (!($serverAlias instanceof PropertyInterface)) {
+            $serverAlias = new ServerAliasProperty($serverAlias);
+        }
+
+        $this->addProperty(ServerAliasProperty::NAME, $serverAlias);
 
         return $this;
     }
