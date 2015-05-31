@@ -1,8 +1,8 @@
 <?php
 
-namespace Eps\VhostGeneratorBundle\Tests\Generator\Apache\Property;
+namespace Eps\VhostGeneratorBundle\Tests\Generator\Apache\Property\VHost;
 
-use Eps\VhostGeneratorBundle\Generator\Apache\Property\DocumentRootProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\DocumentRootProperty;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 

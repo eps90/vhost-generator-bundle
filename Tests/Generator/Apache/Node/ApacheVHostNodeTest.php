@@ -3,9 +3,9 @@
 namespace Eps\VhostGeneratorBundle\Tests\Generator\Apache\Node;
 
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\ApacheVHostNode;
-use Eps\VhostGeneratorBundle\Generator\Apache\Property\DocumentRootProperty;
-use Eps\VhostGeneratorBundle\Generator\Apache\Property\ServerAliasProperty;
-use Eps\VhostGeneratorBundle\Generator\Apache\Property\ServerNameProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\DocumentRootProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerAliasProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerNameProperty;
 use org\bovigo\vfs\vfsStream;
 
 /**
@@ -115,7 +115,7 @@ class ApacheVHostNodeTest extends \PHPUnit_Framework_TestCase
         /** @var DocumentRootProperty $documentRoot */
         $documentRoot = $parameters[DocumentRootProperty::NAME];
         $this->assertInstanceOf(
-            'Eps\VhostGeneratorBundle\Generator\Apache\Property\DocumentRootProperty',
+            'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\DocumentRootProperty',
             $documentRoot
         );
         $this->assertEquals($documentRoot->getValue(), $filePath);
@@ -146,7 +146,7 @@ class ApacheVHostNodeTest extends \PHPUnit_Framework_TestCase
         /** @var DocumentRootProperty $documentRoot */
         $documentRoot = $parameters[DocumentRootProperty::NAME];
         $this->assertInstanceOf(
-            'Eps\VhostGeneratorBundle\Generator\Apache\Property\DocumentRootProperty',
+            'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\DocumentRootProperty',
             $documentRoot
         );
         $this->assertEquals($documentRoot->getValue(), $filePath);
@@ -179,7 +179,7 @@ class ApacheVHostNodeTest extends \PHPUnit_Framework_TestCase
         /** @var ServerNameProperty $serverName */
         $serverName = $vhostName->getProperties()[ServerNameProperty::NAME];
         $this->assertInstanceOf(
-            'Eps\VhostGeneratorBundle\Generator\Apache\Property\ServerNameProperty',
+            'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerNameProperty',
             $serverName
         );
         $this->assertEquals($serverName->getValue(), $serverNameProp);
@@ -212,7 +212,7 @@ class ApacheVHostNodeTest extends \PHPUnit_Framework_TestCase
         /** @var ServerNameProperty $serverName */
         $serverName = $vhostName->getProperties()[ServerAliasProperty::NAME];
         $this->assertInstanceOf(
-            'Eps\VhostGeneratorBundle\Generator\Apache\Property\ServerAliasProperty',
+            'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerAliasProperty',
             $serverName
         );
         $this->assertEquals($serverName->getValue(), $serverNameProp);

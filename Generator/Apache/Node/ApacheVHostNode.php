@@ -2,9 +2,9 @@
 
 namespace Eps\VhostGeneratorBundle\Generator\Apache\Node;
 
-use Eps\VhostGeneratorBundle\Generator\Apache\Property\DocumentRootProperty;
-use Eps\VhostGeneratorBundle\Generator\Apache\Property\ServerAliasProperty;
-use Eps\VhostGeneratorBundle\Generator\Apache\Property\ServerNameProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\DocumentRootProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerAliasProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerNameProperty;
 use Eps\VhostGeneratorBundle\Generator\Exception\ValidationException;
 use Eps\VhostGeneratorBundle\Generator\Node\NodeInterface;
 use Eps\VhostGeneratorBundle\Generator\Property\PropertyInterface;

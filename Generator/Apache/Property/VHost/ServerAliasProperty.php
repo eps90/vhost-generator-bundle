@@ -1,6 +1,6 @@
 <?php
 
-namespace Eps\VhostGeneratorBundle\Generator\Apache\Property;
+namespace Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost;
 
 /**
  * Class ServerAliasProperty

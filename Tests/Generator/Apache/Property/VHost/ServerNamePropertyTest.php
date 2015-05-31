@@ -1,8 +1,8 @@
 <?php
 
-namespace Eps\VhostGeneratorBundle\Tests\Generator\Apache\Property;
+namespace Eps\VhostGeneratorBundle\Tests\Generator\Apache\Property\VHost;
 
-use Eps\VhostGeneratorBundle\Generator\Apache\Property\ServerNameProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerNameProperty;
 
 /**
  * Class ServerNamePropertyTest
