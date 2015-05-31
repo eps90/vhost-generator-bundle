@@ -4,6 +4,7 @@ namespace Eps\VhostGeneratorBundle\Tests\Generator\Apache\Node;
 
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\DirectoryNode;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowOverrideProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\OptionsProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\RequireProperty;
 use org\bovigo\vfs\vfsStream;
@@ -202,5 +203,51 @@ class DirectoryNodeTest extends \PHPUnit_Framework_TestCase
             $require
         );
         $this->assertEquals($requireProperty, $require->getValue());
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldAllowToAddRequireOptionAsObject()
+    {
+        $requireProperty = new RequireProperty('all granted');
+        $node = new DirectoryNode();
+        $node->setRequire($requireProperty);
+
+        /** @var RequireProperty $require */
+        $require = $node->getProperties()[RequireProperty::NAME];
+        $this->assertEquals($requireProperty, $require);
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldAllowToAddAllowOption()
+    {
+        $allowProperty = 'all';
+        $node = new DirectoryNode();
+        $node->setAllow($allowProperty);
+
+        /** @var AllowProperty $allow */
+        $allow = $node->getProperties()[AllowProperty::NAME];
+        $this->assertInstanceOf(
+            'Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowProperty',
+            $allow
+        );
+        $this->assertEquals('from ' . $allowProperty, $allow->getValue());
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldAllowToAddAllowOptionAsObject()
+    {
+        $allowProperty = new AllowProperty('all');
+        $node = new DirectoryNode();
+        $node->setAllow($allowProperty);
+
+        /** @var AllowProperty $allow */
+        $allow = $node->getProperties()[AllowProperty::NAME];
+        $this->assertEquals($allowProperty, $allow);
     }
 }

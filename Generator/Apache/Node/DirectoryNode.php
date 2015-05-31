@@ -3,6 +3,7 @@
 namespace Eps\VhostGeneratorBundle\Generator\Apache\Node;
 
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowOverrideProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\OptionsProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\RequireProperty;
 use Eps\VhostGeneratorBundle\Generator\Exception\ValidationException;
@@ -117,6 +118,23 @@ class DirectoryNode implements NodeInterface
         }
 
         $this->addProperty(RequireProperty::NAME, $requireOptions, $this->properties);
+
+        return $this;
+    }
+
+    /**
+     * Sets the Allow property
+     *
+     * @param string|AllowProperty $allow
+     * @return $this
+     */
+    public function setAllow($allow)
+    {
+        if (!($allow instanceof AllowProperty)) {
+            $allow = new AllowProperty($allow);
+        }
+
+        $this->addProperty(AllowProperty::NAME, $allow, $this->properties);
 
         return $this;
     }
