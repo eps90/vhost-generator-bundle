@@ -117,7 +117,11 @@ class DirectoryNodeTest extends \PHPUnit_Framework_TestCase
      */
     public function itShouldThrowIfOptionsAreInvalid()
     {
-        $options = $this->getMock('Eps\VhostGeneratorBundle\Generator\Property\ValidatablePropertyInterface');
+        $options = $this->getMockBuilder(
+            'Eps\VHostGeneratorBundle\Generator\Apache\Property\Directory\OptionsProperty'
+        )
+            ->disableOriginalConstructor()
+            ->getMock();
         $options->expects($this->once())
             ->method('isValid')
             ->willReturn(false);

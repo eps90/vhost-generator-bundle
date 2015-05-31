@@ -78,7 +78,7 @@ class DirectoryNode implements NodeInterface
      */
     public function setOptions($options)
     {
-        if (!($options instanceof PropertyInterface)) {
+        if (!($options instanceof OptionsProperty)) {
             $options = new OptionsProperty($options);
         }
 

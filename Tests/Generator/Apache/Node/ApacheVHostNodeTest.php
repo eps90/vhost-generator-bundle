@@ -159,7 +159,11 @@ class ApacheVHostNodeTest extends \PHPUnit_Framework_TestCase
     public function itShouldThrowIfDocumentRootIsInvalid()
     {
         $vhostNode = new ApacheVHostNode();
-        $documentRootProp = $this->getMock('Eps\VHostGeneratorBundle\Generator\Property\ValidatablePropertyInterface');
+        $documentRootProp = $this->getMockBuilder(
+            'Eps\VHostGeneratorBundle\Generator\Apache\Property\VHost\DocumentRootproperty'
+        )
+            ->disableOriginalConstructor()
+            ->getMock();
         $documentRootProp->expects($this->once())
             ->method('isValid')
             ->willReturn(false);
@@ -191,7 +195,11 @@ class ApacheVHostNodeTest extends \PHPUnit_Framework_TestCase
      */
     public function itShouldThrowIfServerNamePropertyIsNotValid()
     {
-        $serverNameProp = $this->getMock('Eps\VHostGeneratorBundle\Generator\Property\ValidatablePropertyInterface');
+        $serverNameProp = $this->getMockBuilder(
+            'Eps\VHostGeneratorBundle\Generator\Apache\Property\VHost\ServerNameProperty'
+        )
+            ->disableOriginalConstructor()
+            ->getMock();
         $serverNameProp->expects($this->once())
             ->method('isValid')
             ->willReturn(false);
@@ -205,17 +213,17 @@ class ApacheVHostNodeTest extends \PHPUnit_Framework_TestCase
      */
     public function itShouldAllowToSetServerAlias()
     {
-        $serverNameProp = 'www.example.com';
-        $vhostName = new ApacheVHostNode();
-        $vhostName->setServerAlias($serverNameProp);
+        $serverAliasProp = 'www.example.com';
+        $vhostNode = new ApacheVHostNode();
+        $vhostNode->setServerAlias($serverAliasProp);
 
         /** @var ServerNameProperty $serverName */
-        $serverName = $vhostName->getProperties()[ServerAliasProperty::NAME];
+        $serverName = $vhostNode->getProperties()[ServerAliasProperty::NAME];
         $this->assertInstanceOf(
             'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerAliasProperty',
             $serverName
         );
-        $this->assertEquals($serverName->getValue(), $serverNameProp);
+        $this->assertEquals($serverName->getValue(), $serverAliasProp);
     }
 
     /**
@@ -224,7 +232,11 @@ class ApacheVHostNodeTest extends \PHPUnit_Framework_TestCase
      */
     public function itShouldThrowIfServerAliasPropertyIsNotValid()
     {
-        $serverNameProp = $this->getMock('Eps\VHostGeneratorBundle\Generator\Property\ValidatablePropertyInterface');
+        $serverNameProp = $this->getMockBuilder(
+            'Eps\VHostGeneratorBundle\Generator\Apache\Property\VHost\ServerAliasProperty'
+        )
+            ->disableOriginalConstructor()
+            ->getMock();
         $serverNameProp->expects($this->once())
             ->method('isValid')
             ->willReturn(false);

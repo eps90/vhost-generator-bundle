@@ -98,7 +98,7 @@ class ApacheVHostNode implements NodeInterface
      */
     public function setDocumentRoot($documentRoot)
     {
-        if (!($documentRoot instanceof PropertyInterface)) {
+        if (!($documentRoot instanceof DocumentRootProperty)) {
             $documentRoot = new DocumentRootProperty($documentRoot);
         }
 
@@ -115,7 +115,7 @@ class ApacheVHostNode implements NodeInterface
      */
     public function setServerName($serverName)
     {
-        if (!($serverName instanceof PropertyInterface)) {
+        if (!($serverName instanceof ServerNameProperty)) {
             $serverName = new ServerNameProperty($serverName);
         }
 
@@ -132,7 +132,7 @@ class ApacheVHostNode implements NodeInterface
      */
     public function setServerAlias($serverAlias)
     {
-        if (!($serverAlias instanceof PropertyInterface)) {
+        if (!($serverAlias instanceof ServerAliasProperty)) {
             $serverAlias = new ServerAliasProperty($serverAlias);
         }
 
