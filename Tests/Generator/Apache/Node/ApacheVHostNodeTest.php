@@ -194,4 +194,19 @@ class ApacheVHostNodeTest extends \PHPUnit_Framework_TestCase
         $vhostName = new ApacheVHostNode();
         $vhostName->setServerName($serverNameProp);
     }
+
+    /**
+     * @test
+     * @expectedException \Eps\VHostGeneratorBundle\Generator\Exception\ValidationException
+     */
+    public function itShouldThrowIfServerNamePropertyIsNotValid()
+    {
+        $serverNameProp = $this->getMock('Eps\VHostGeneratorBundle\Generator\Property\ValidatablePropertyInterface');
+        $serverNameProp->expects($this->once())
+            ->method('isValid')
+            ->willReturn(false);
+
+        $vhostName = new ApacheVHostNode();
+        $vhostName->setServerName($serverNameProp);
+    }
 }
