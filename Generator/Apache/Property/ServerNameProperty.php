@@ -4,6 +4,12 @@ namespace Eps\VhostGeneratorBundle\Generator\Apache\Property;
 
 use Eps\VhostGeneratorBundle\Generator\Property\ValidatablePropertyInterface;
 
+/**
+ * Class ServerNameProperty
+ * @package Eps\VhostGeneratorBundle\Generator\Apache\Property
+ * @author Jakub Turek <ja@kubaturek.pl>
+ * @todo Allow to add array of values
+ */
 class ServerNameProperty implements ValidatablePropertyInterface
 {
     const NAME = 'ServerName';
