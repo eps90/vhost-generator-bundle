@@ -91,9 +91,10 @@ class OptionsProperty implements ValidatablePropertyInterface
                 } else {
                     $result[$key] = $value;
                 }
-            } elseif ($key == self::MULTI_VIEWS && $includesAll) {
-                $result[$key] = $value;
-            } elseif (!$includesAll && !$includesNone) {
+            } elseif (
+                ($key == self::MULTI_VIEWS && $includesAll)
+                || (!$includesAll && !$includesNone)
+            ) {
                 $result[$key] = $value;
             }
         }

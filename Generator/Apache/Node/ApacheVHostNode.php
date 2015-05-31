@@ -8,7 +8,6 @@ use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerNameProperty;
 use Eps\VhostGeneratorBundle\Generator\Exception\ValidationException;
 use Eps\VhostGeneratorBundle\Generator\Node\NodeInterface;
 use Eps\VhostGeneratorBundle\Generator\Property\PropertyInterface;
-use Eps\VhostGeneratorBundle\Generator\Property\ValidatablePropertyInterface;
 
 /**
  * Class ApacheVHostNode

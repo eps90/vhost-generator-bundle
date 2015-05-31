@@ -5,6 +5,11 @@ namespace Eps\VhostGeneratorBundle\Generator\Apache\Formatter;
 use Eps\VhostGeneratorBundle\Generator\Formatter\ConfigurationFormatterInterface;
 use Eps\VhostGeneratorBundle\Generator\Node\NodeInterface;
 
+/**
+ * Class ApacheVHostFormatter
+ * @package Eps\VhostGeneratorBundle\Generator\Apache\Formatter
+ * @author Jakub Turek <ja@kubaturek.pl>
+ */
 class ApacheVHostFormatter implements ConfigurationFormatterInterface
 {
     /**

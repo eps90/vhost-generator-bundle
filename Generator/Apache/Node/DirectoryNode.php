@@ -8,8 +8,6 @@ use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\OptionsProperty
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\RequireProperty;
 use Eps\VhostGeneratorBundle\Generator\Exception\ValidationException;
 use Eps\VhostGeneratorBundle\Generator\Node\NodeInterface;
-use Eps\VhostGeneratorBundle\Generator\Property\PropertyInterface;
-use Eps\VhostGeneratorBundle\Generator\Property\ValidatablePropertyInterface;
 
 /**
  * Class DirectoryNode

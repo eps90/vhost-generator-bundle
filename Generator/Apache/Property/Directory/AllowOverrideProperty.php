@@ -14,22 +14,49 @@ class AllowOverrideProperty implements ValidatablePropertyInterface
 {
     const NAME = 'AllowOverride';
 
+    /**
+     * Enable all options
+     */
     const ALL = 'All';
 
+    /**
+     * Disable all options
+     */
     const NONE = 'None';
 
+    /**
+     * Enable use of the authorization directives
+     */
     const AUTH_CONFIG = 'AuthConfig';
 
+    /**
+     * Enable use of the directives controlling document types
+     */
     const FILE_INFO = 'FileInfo';
 
+    /**
+     * Enable use of the directives controlling directory indexing
+     */
     const INDEXES = 'Indexes';
 
+    /**
+     * Enable use of the directives controlling host access
+     */
     const LIMIT = 'Limit';
 
+    /**
+     * Treat directives forbidden by AllowOverride as non-fatal
+     */
     const NONFATAL_OVERRIDE = 'Nonfatal=Override';
 
+    /**
+     * Treats unknown directives as non-fatal
+     */
     const NONFATAL_UNKNOWN = 'Nonfatal=Unknown';
 
+    /**
+     * Treats "Override" and "Unknown" the above as non-fatal
+     */
     const NONFATAL_ALL = 'Nonfatal=All';
 
     /**
