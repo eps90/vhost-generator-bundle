@@ -4,6 +4,7 @@ namespace Eps\VhostGeneratorBundle\Tests\Generator\Apache\Node\Factory;
 
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\ApacheVHostNode;
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\Factory\ApacheVHostNodeFactory;
+use Eps\VhostGeneratorBundle\Generator\Apache\Node\Factory\DirectoryNodeFactory;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\DocumentRootProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerAliasProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerNameProperty;
@@ -164,7 +165,13 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function itShouldCreateSimpleVHostByConfigValues($config, $attributes, $properties)
     {
-        $factory = new ApacheVHostNodeFactory();
+        $directoryNodeFactory = $this->getMockBuilder(
+            'Eps\VhostGeneratorBundle\Generator\Apache\Node\Factory\DirectoryNodeFactory'
+        )
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $factory = new ApacheVHostNodeFactory($directoryNodeFactory);
         /** @var ApacheVHostNode $actual */
         $actual = $factory->createNode($config);
 
@@ -178,5 +185,84 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
             $this->assertInstanceOf($propertyOpts['class'], $property);
             $this->assertEquals($propertyOpts['value'], $property->getValue());
         }
+    }
+
+    public function complexConfigProvider()
+    {
+        $structure = [
+            'srv' => [
+                'www' => [
+                    'data' => [
+                        'my_file.php' => "<?php echo 'OK'; ?>"
+                    ],
+                    'other' => [
+                        'my_file.php' => "<?php echo 'OK'; ?>"
+                    ]
+                ]
+            ]
+        ];
+
+        $filesystem = vfsStream::setup('root', null, $structure);
+
+        return [
+            'happy_path' => [
+                'config' => [
+                    'ip_address' => '127.0.0.1',
+                    'port' => '8080',
+                    'server_name' => 'www.example.com',
+                    'server_alias' => 'example.com',
+                    'document_root' => $filesystem->url() . '/srv/www/data',
+                    'directories' => [
+                        [
+                            'path' => $filesystem->url() . '/srv/www/data',
+                            'options' => [
+                                'ExecCGI',
+                                'Indexes'
+                            ],
+                            'allow_override' => 'All',
+                            'allow' => 'all',
+                            'require' => 'all_granted'
+                        ],
+                        [
+                            'path' => $filesystem->url() . '/srv/www/other',
+                            'options' => [
+                                'ExecCGI',
+                                'Indexes'
+                            ],
+                            'allow_override' => 'All',
+                            'allow' => 'all',
+                            'require' => 'all_granted'
+                        ],
+                    ]
+                ]
+            ]
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider complexConfigProvider
+     */
+    public function itShouldCreateNestedDirectoryNodeWithGivenConfiguration($config)
+    {
+        $directoryNodeFactory = $this->getMockBuilder(
+            'Eps\VhostGeneratorBundle\Generator\Apache\Node\Factory\DirectoryNodeFactory'
+        )
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        for ($i = 0; $i < count($config['directories']); $i++) {
+            $directoryNode = $this->getMockBuilder('Eps\VhostGeneratorBundle\Generator\Apache\Node\DirectoryNode')
+                ->disableOriginalConstructor()
+                ->getMock();
+
+            $directoryNodeFactory->expects($this->at($i))
+                ->method('createNode')
+                ->with($config['directories'][$i])
+                ->willReturn($directoryNode);
+        }
+
+        $factory = new ApacheVHostNodeFactory($directoryNodeFactory);
+        $factory->createNode($config);
     }
 }

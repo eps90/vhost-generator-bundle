@@ -4,7 +4,6 @@ namespace Eps\VhostGeneratorBundle\Generator\Apache\Node\Factory;
 
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\ApacheVHostNode;
 use Eps\VhostGeneratorBundle\Generator\Node\Factory\NodeFactoryInterface;
-use Eps\VhostGeneratorBundle\Generator\Node\NodeInterface;
 
 /**
  * Class ApacheVHostNodeFactory
@@ -13,6 +12,13 @@ use Eps\VhostGeneratorBundle\Generator\Node\NodeInterface;
  */
 class ApacheVHostNodeFactory implements NodeFactoryInterface
 {
+    protected $directoryNodeFactory;
+
+    public function __construct(DirectoryNodeFactory $directoryNodeFactory)
+    {
+        $this->directoryNodeFactory = $directoryNodeFactory;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -38,6 +44,12 @@ class ApacheVHostNodeFactory implements NodeFactoryInterface
         $vhostNode->setServerName($serverName);
         $vhostNode->setServerAlias($serverAlias);
         $vhostNode->setDocumentRoot($documentRoot);
+
+        if (isset($nodeConfiguration['directories'])) {
+            foreach ($nodeConfiguration['directories'] as $directoryConfig) {
+                $vhostNode->addDirectoryNode($this->directoryNodeFactory->createNode($directoryConfig));
+            }
+        }
 
         return $vhostNode;
     }
