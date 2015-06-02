@@ -24,7 +24,7 @@ class ApacheGeneratorTest extends \PHPUnit_Framework_TestCase
         $factory->expects($this->once())
             ->method('createNodes')
             ->with($config)
-            ->willReturn($node);
+            ->willReturn([$node]);
 
         $formatter = $this->getMock('Eps\VhostGeneratorBundle\Generator\Formatter\ConfigurationFormatterInterface');
         $formatter->expects($this->once())
