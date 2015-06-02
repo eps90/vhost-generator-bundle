@@ -53,8 +53,9 @@ class ApacheVHostNodeFactory implements NodeFactoryInterface
             }
 
             if (isset($nodeConfiguration['directories'])) {
-                foreach ($nodeConfiguration['directories'] as $directoryConfig) {
-                    $vhostNode->addDirectoryNode($this->directoryNodeFactory->createNode($directoryConfig));
+                $directoryNodes = $this->directoryNodeFactory->createNode($nodeConfiguration['directories']);
+                foreach ($directoryNodes as $directoryNode) {
+                    $vhostNode->addDirectoryNode($directoryNode);
                 }
             }
 

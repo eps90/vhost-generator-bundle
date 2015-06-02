@@ -321,24 +321,27 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function itShouldCreateNestedDirectoryNodeWithGivenConfiguration($config)
     {
+        $directoryNodeOne = $this->getMockBuilder('Eps\VhostGeneratorBundle\Generator\Apache\Node\DirectoryNode')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $directoryNodeTwo = $this->getMockBuilder('Eps\VhostGeneratorBundle\Generator\Apache\Node\DirectoryNode')
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $directoryNodeFactory = $this->getMockBuilder(
             'Eps\VhostGeneratorBundle\Generator\Apache\Node\Factory\DirectoryNodeFactory'
         )
             ->disableOriginalConstructor()
             ->getMock();
 
-        for ($i = 0; $i < count($config[0]['directories']); $i++) {
-            $directoryNode = $this->getMockBuilder('Eps\VhostGeneratorBundle\Generator\Apache\Node\DirectoryNode')
-                ->disableOriginalConstructor()
-                ->getMock();
-
-            $directoryNodeFactory->expects($this->at($i))
-                ->method('createNode')
-                ->with($config[0]['directories'][$i])
-                ->willReturn($directoryNode);
-        }
+        $directoryNodeFactory->expects($this->once())
+            ->method('createNode')
+            ->with($config[0]['directories'])
+            ->willReturn([$directoryNodeOne, $directoryNodeTwo]);
 
         $factory = new ApacheVHostNodeFactory($directoryNodeFactory);
-        $factory->createNode($config);
+        /** @var ApacheVHostNode[] $actual */
+        $actual = $factory->createNode($config);
+        $this->assertEquals([$directoryNodeOne, $directoryNodeTwo], $actual[0]->getNodes());
     }
 }
