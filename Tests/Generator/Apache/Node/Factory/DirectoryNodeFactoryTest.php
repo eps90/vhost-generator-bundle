@@ -34,16 +34,18 @@ class DirectoryNodeFactoryTest extends \PHPUnit_Framework_TestCase
         return [
             'happy_path' => [
                 'config' => [
-                    'path' => $fileSystem->url() . '/srv/www/data',
-                    'allow_override' => [
-                        'All'
-                    ],
-                    'allow' => 'all',
-                    'options' => [
-                        'ExecCGI',
-                        'Indexes'
-                    ],
-                    'require' => 'all granted'
+                    [
+                        'path' => $fileSystem->url() . '/srv/www/data',
+                        'allow_override' => [
+                            'All'
+                        ],
+                        'allow' => 'all',
+                        'options' => [
+                            'ExecCGI',
+                            'Indexes'
+                        ],
+                        'require' => 'all granted'
+                    ]
                 ],
                 'attributes' => [
                     DirectoryNode::DIRECTORY_PATH => $fileSystem->url() . '/srv/www/data'
@@ -69,13 +71,15 @@ class DirectoryNodeFactoryTest extends \PHPUnit_Framework_TestCase
             ],
             'missing_allow_override' => [
                 'config' => [
-                    'path' => $fileSystem->url() . '/srv/www/data',
-                    'allow' => 'all',
-                    'options' => [
-                        'ExecCGI',
-                        'Indexes'
-                    ],
-                    'require' => 'all granted'
+                    [
+                        'path' => $fileSystem->url() . '/srv/www/data',
+                        'allow' => 'all',
+                        'options' => [
+                            'ExecCGI',
+                            'Indexes'
+                        ],
+                        'require' => 'all granted'
+                    ]
                 ],
                 'attributes' => [
                     DirectoryNode::DIRECTORY_PATH => $fileSystem->url() . '/srv/www/data'
@@ -98,15 +102,17 @@ class DirectoryNodeFactoryTest extends \PHPUnit_Framework_TestCase
 
             'missing_allow' => [
                 'config' => [
-                    'path' => $fileSystem->url() . '/srv/www/data',
-                    'allow_override' => [
-                        'All'
-                    ],
-                    'options' => [
-                        'ExecCGI',
-                        'Indexes'
-                    ],
-                    'require' => 'all granted'
+                    [
+                        'path' => $fileSystem->url() . '/srv/www/data',
+                        'allow_override' => [
+                            'All'
+                        ],
+                        'options' => [
+                            'ExecCGI',
+                            'Indexes'
+                        ],
+                        'require' => 'all granted'
+                    ]
                 ],
                 'attributes' => [
                     DirectoryNode::DIRECTORY_PATH => $fileSystem->url() . '/srv/www/data'
@@ -129,12 +135,14 @@ class DirectoryNodeFactoryTest extends \PHPUnit_Framework_TestCase
 
             'missing_options' => [
                 'config' => [
-                    'path' => $fileSystem->url() . '/srv/www/data',
-                    'allow_override' => [
-                        'All'
-                    ],
-                    'allow' => 'all',
-                    'require' => 'all granted'
+                    [
+                        'path' => $fileSystem->url() . '/srv/www/data',
+                        'allow_override' => [
+                            'All'
+                        ],
+                        'allow' => 'all',
+                        'require' => 'all granted'
+                    ]
                 ],
                 'attributes' => [
                     DirectoryNode::DIRECTORY_PATH => $fileSystem->url() . '/srv/www/data'
@@ -157,14 +165,16 @@ class DirectoryNodeFactoryTest extends \PHPUnit_Framework_TestCase
 
             'missing_require' => [
                 'config' => [
-                    'path' => $fileSystem->url() . '/srv/www/data',
-                    'allow_override' => [
-                        'All'
-                    ],
-                    'allow' => 'all',
-                    'options' => [
-                        'ExecCGI',
-                        'Indexes'
+                    [
+                        'path' => $fileSystem->url() . '/srv/www/data',
+                        'allow_override' => [
+                            'All'
+                        ],
+                        'allow' => 'all',
+                        'options' => [
+                            'ExecCGI',
+                            'Indexes'
+                        ]
                     ]
                 ],
                 'attributes' => [
@@ -195,15 +205,15 @@ class DirectoryNodeFactoryTest extends \PHPUnit_Framework_TestCase
     public function itShouldCreateDirectoryNodeFromConfig($config, $attributes, $properties)
     {
         $factory = new DirectoryNodeFactory();
-        $directoryNode = $factory->createNode($config);
+        $directoryNodes = $factory->createNode($config);
 
         foreach ($attributes as $attributeName => $attributeValue) {
-            $attribute = $directoryNode->getAttributes()[$attributeName];
+            $attribute = $directoryNodes[0]->getAttributes()[$attributeName];
             $this->assertEquals($attribute, $attributeValue);
         }
 
         foreach ($properties as $propertyName => $propertyOpts) {
-            $property = $directoryNode->getProperties()[$propertyName];
+            $property = $directoryNodes[0]->getProperties()[$propertyName];
             $this->assertInstanceOf($propertyOpts['class'], $property);
             $this->assertEquals($propertyOpts['value'], $property->getValue());
         }
@@ -216,11 +226,13 @@ class DirectoryNodeFactoryTest extends \PHPUnit_Framework_TestCase
     public function itShouldThrowIfDirectoryPathIsMissing()
     {
         $config = [
-            'allow_override' => [
-                'All'
-            ],
-            'allow' => 'all',
-            'require' => 'all granted'
+            [
+                'allow_override' => [
+                    'All'
+                ],
+                'allow' => 'all',
+                'require' => 'all granted'
+            ]
         ];
 
         $factory = new DirectoryNodeFactory();

@@ -17,32 +17,37 @@ class DirectoryNodeFactory implements NodeFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function createNode(array $nodeConfiguration)
+    public function createNode(array $nodesConfiguration)
     {
-        $directoryNode = new DirectoryNode();
+        $nodes = [];
+        foreach ($nodesConfiguration as $nodeConfiguration) {
+            $directoryNode = new DirectoryNode();
 
-        if (!isset($nodeConfiguration['path'])) {
-            throw new MissingPropertyException($directoryNode, DirectoryNode::DIRECTORY_PATH);
+            if (!isset($nodeConfiguration['path'])) {
+                throw new MissingPropertyException($directoryNode, DirectoryNode::DIRECTORY_PATH);
+            }
+
+            $directoryNode->setDirectoryPath($nodeConfiguration['path']);
+
+            if (isset($nodeConfiguration['allow'])) {
+                $directoryNode->setAllow($nodeConfiguration['allow']);
+            }
+
+            if (isset($nodeConfiguration['allow_override'])) {
+                $directoryNode->setAllowOverride($nodeConfiguration['allow_override']);
+            }
+
+            if (isset($nodeConfiguration['options'])) {
+                $directoryNode->setOptions($nodeConfiguration['options']);
+            }
+
+            if (isset($nodeConfiguration['require'])) {
+                $directoryNode->setRequire($nodeConfiguration['require']);
+            }
+
+            $nodes[] = $directoryNode;
         }
 
-        $directoryNode->setDirectoryPath($nodeConfiguration['path']);
-
-        if (isset($nodeConfiguration['allow'])) {
-            $directoryNode->setAllow($nodeConfiguration['allow']);
-        }
-
-        if (isset($nodeConfiguration['allow_override'])) {
-            $directoryNode->setAllowOverride($nodeConfiguration['allow_override']);
-        }
-
-        if (isset($nodeConfiguration['options'])) {
-            $directoryNode->setOptions($nodeConfiguration['options']);
-        }
-
-        if (isset($nodeConfiguration['require'])) {
-            $directoryNode->setRequire($nodeConfiguration['require']);
-        }
-
-        return $directoryNode;
+        return $nodes;
     }
 }
