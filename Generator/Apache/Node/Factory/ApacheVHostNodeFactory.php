@@ -22,40 +22,45 @@ class ApacheVHostNodeFactory implements NodeFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function createNode(array $nodeConfiguration)
+    public function createNode(array $nodesConfiguration)
     {
-        $vhostNode = new ApacheVHostNode();
+        $nodes = [];
+        foreach ($nodesConfiguration as $nodeConfiguration) {
+            $vhostNode = new ApacheVHostNode();
 
-        $ipAddress = '*';
-        $port = 80;
-        if (isset($nodeConfiguration['ip_address'])) {
-            $ipAddress = $nodeConfiguration['ip_address'];
-        }
-
-        if (isset($nodeConfiguration['port'])) {
-            $port = $nodeConfiguration['port'];
-        }
-
-        $vhostNode->setAddress($ipAddress, $port);
-
-        if (isset($nodeConfiguration['server_name'])) {
-            $vhostNode->setServerName($nodeConfiguration['server_name']);
-        }
-
-        if (isset($nodeConfiguration['server_alias'])) {
-            $vhostNode->setServerAlias($nodeConfiguration['server_alias']);
-        }
-
-        if (isset($nodeConfiguration['document_root'])) {
-            $vhostNode->setDocumentRoot($nodeConfiguration['document_root']);
-        }
-
-        if (isset($nodeConfiguration['directories'])) {
-            foreach ($nodeConfiguration['directories'] as $directoryConfig) {
-                $vhostNode->addDirectoryNode($this->directoryNodeFactory->createNode($directoryConfig));
+            $ipAddress = '*';
+            $port = 80;
+            if (isset($nodeConfiguration['ip_address'])) {
+                $ipAddress = $nodeConfiguration['ip_address'];
             }
+
+            if (isset($nodeConfiguration['port'])) {
+                $port = $nodeConfiguration['port'];
+            }
+
+            $vhostNode->setAddress($ipAddress, $port);
+
+            if (isset($nodeConfiguration['server_name'])) {
+                $vhostNode->setServerName($nodeConfiguration['server_name']);
+            }
+
+            if (isset($nodeConfiguration['server_alias'])) {
+                $vhostNode->setServerAlias($nodeConfiguration['server_alias']);
+            }
+
+            if (isset($nodeConfiguration['document_root'])) {
+                $vhostNode->setDocumentRoot($nodeConfiguration['document_root']);
+            }
+
+            if (isset($nodeConfiguration['directories'])) {
+                foreach ($nodeConfiguration['directories'] as $directoryConfig) {
+                    $vhostNode->addDirectoryNode($this->directoryNodeFactory->createNode($directoryConfig));
+                }
+            }
+
+            $nodes[] = $vhostNode;
         }
 
-        return $vhostNode;
+        return $nodes;
     }
 }

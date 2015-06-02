@@ -12,10 +12,10 @@ use Eps\VhostGeneratorBundle\Generator\Node\NodeInterface;
 interface NodeFactoryInterface 
 {
     /**
-     * Creates a node by given configuration options
+     * Creates nodes by given configuration options
      *
-     * @param array $nodeConfiguration
-     * @return NodeInterface
+     * @param array $nodesConfiguration
+     * @return NodeInterface[]
      */
-    public function createNode(array $nodeConfiguration);
+    public function createNode(array $nodesConfiguration);
 }

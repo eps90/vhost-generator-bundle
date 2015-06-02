@@ -58,11 +58,13 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
         return [
             'happy_path' => [
                 'config' => [
-                    'ip_address' => '127.0.0.1',
-                    'port' => '8080',
-                    'server_name' => 'www.example.com',
-                    'server_alias' => 'example.com',
-                    'document_root' => $filesystem->url() . '/srv/www/data'
+                    [
+                        'ip_address' => '127.0.0.1',
+                        'port' => '8080',
+                        'server_name' => 'www.example.com',
+                        'server_alias' => 'example.com',
+                        'document_root' => $filesystem->url() . '/srv/www/data'
+                    ]
                 ],
                 'attributes' => [
                     ApacheVHostNode::ADDRESS => '127.0.0.1:8080',
@@ -84,10 +86,12 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
             ],
             'ip_address_without_port' => [
                 'config' => [
-                    'ip_address' => '127.0.0.1',
-                    'server_name' => 'www.example.com',
-                    'server_alias' => 'example.com',
-                    'document_root' => $filesystem->url() . '/srv/www/data'
+                    [
+                        'ip_address' => '127.0.0.1',
+                        'server_name' => 'www.example.com',
+                        'server_alias' => 'example.com',
+                        'document_root' => $filesystem->url() . '/srv/www/data'
+                    ]
                 ],
                 'attributes' => [
                     ApacheVHostNode::ADDRESS => '127.0.0.1:80',
@@ -109,10 +113,12 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
             ],
             'port_without_ip_address' => [
                 'config' => [
-                    'port' => '80',
-                    'server_name' => 'www.example.com',
-                    'server_alias' => 'example.com',
-                    'document_root' => $filesystem->url() . '/srv/www/data'
+                    [
+                        'port' => '80',
+                        'server_name' => 'www.example.com',
+                        'server_alias' => 'example.com',
+                        'document_root' => $filesystem->url() . '/srv/www/data'
+                    ]
                 ],
                 'attributes' => [
                     ApacheVHostNode::ADDRESS => '*:80',
@@ -134,9 +140,11 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
             ],
             'no_ip_nor_port' => [
                 'config' => [
-                    'server_name' => 'www.example.com',
-                    'server_alias' => 'example.com',
-                    'document_root' => $filesystem->url() . '/srv/www/data'
+                    [
+                        'server_name' => 'www.example.com',
+                        'server_alias' => 'example.com',
+                        'document_root' => $filesystem->url() . '/srv/www/data'
+                    ]
                 ],
                 'attributes' => [
                     ApacheVHostNode::ADDRESS => '*:80',
@@ -158,8 +166,10 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
             ],
             'no_server_name' => [
                 'config' => [
-                    'server_alias' => 'example.com',
-                    'document_root' => $filesystem->url() . '/srv/www/data'
+                    [
+                        'server_alias' => 'example.com',
+                        'document_root' => $filesystem->url() . '/srv/www/data'
+                    ]
                 ],
                 'attributes' => [
                     ApacheVHostNode::ADDRESS => '*:80',
@@ -178,8 +188,10 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
 
             'no_server_alias' => [
                 'config' => [
-                    'server_name' => 'www.example.com',
-                    'document_root' => $filesystem->url() . '/srv/www/data'
+                    [
+                        'server_name' => 'www.example.com',
+                        'document_root' => $filesystem->url() . '/srv/www/data'
+                    ]
                 ],
                 'attributes' => [
                     ApacheVHostNode::ADDRESS => '*:80',
@@ -198,8 +210,10 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
 
             'no_document_root' => [
                 'config' => [
-                    'server_name' => 'www.example.com',
-                    'server_alias' => 'example.com',
+                    [
+                        'server_name' => 'www.example.com',
+                        'server_alias' => 'example.com'
+                    ]
                 ],
                 'attributes' => [
                     ApacheVHostNode::ADDRESS => '*:80',
@@ -231,16 +245,16 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $factory = new ApacheVHostNodeFactory($directoryNodeFactory);
-        /** @var ApacheVHostNode $actual */
+        /** @var ApacheVHostNode[] $actual */
         $actual = $factory->createNode($config);
 
         foreach ($attributes as $attributeName => $attributeValue) {
-            $attribute = $actual->getAttributes()[$attributeName];
+            $attribute = $actual[0]->getAttributes()[$attributeName];
             $this->assertEquals($attribute, $attributeValue);
         }
 
         foreach ($properties as $propertyName => $propertyOpts) {
-            $property = $actual->getProperties()[$propertyName];
+            $property = $actual[0]->getProperties()[$propertyName];
             $this->assertInstanceOf($propertyOpts['class'], $property);
             $this->assertEquals($propertyOpts['value'], $property->getValue());
         }
@@ -266,32 +280,34 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
         return [
             'happy_path' => [
                 'config' => [
-                    'ip_address' => '127.0.0.1',
-                    'port' => '8080',
-                    'server_name' => 'www.example.com',
-                    'server_alias' => 'example.com',
-                    'document_root' => $filesystem->url() . '/srv/www/data',
-                    'directories' => [
-                        [
-                            'path' => $filesystem->url() . '/srv/www/data',
-                            'options' => [
-                                'ExecCGI',
-                                'Indexes'
+                    [
+                        'ip_address' => '127.0.0.1',
+                        'port' => '8080',
+                        'server_name' => 'www.example.com',
+                        'server_alias' => 'example.com',
+                        'document_root' => $filesystem->url() . '/srv/www/data',
+                        'directories' => [
+                            [
+                                'path' => $filesystem->url() . '/srv/www/data',
+                                'options' => [
+                                    'ExecCGI',
+                                    'Indexes'
+                                ],
+                                'allow_override' => 'All',
+                                'allow' => 'all',
+                                'require' => 'all_granted'
                             ],
-                            'allow_override' => 'All',
-                            'allow' => 'all',
-                            'require' => 'all_granted'
-                        ],
-                        [
-                            'path' => $filesystem->url() . '/srv/www/other',
-                            'options' => [
-                                'ExecCGI',
-                                'Indexes'
+                            [
+                                'path' => $filesystem->url() . '/srv/www/other',
+                                'options' => [
+                                    'ExecCGI',
+                                    'Indexes'
+                                ],
+                                'allow_override' => 'All',
+                                'allow' => 'all',
+                                'require' => 'all_granted'
                             ],
-                            'allow_override' => 'All',
-                            'allow' => 'all',
-                            'require' => 'all_granted'
-                        ],
+                        ]
                     ]
                 ]
             ]
@@ -301,6 +317,7 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @dataProvider complexConfigProvider
+     * @todo Check whether directories are bound to VHost
      */
     public function itShouldCreateNestedDirectoryNodeWithGivenConfiguration($config)
     {
@@ -310,14 +327,14 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        for ($i = 0; $i < count($config['directories']); $i++) {
+        for ($i = 0; $i < count($config[0]['directories']); $i++) {
             $directoryNode = $this->getMockBuilder('Eps\VhostGeneratorBundle\Generator\Apache\Node\DirectoryNode')
                 ->disableOriginalConstructor()
                 ->getMock();
 
             $directoryNodeFactory->expects($this->at($i))
                 ->method('createNode')
-                ->with($config['directories'][$i])
+                ->with($config[0]['directories'][$i])
                 ->willReturn($directoryNode);
         }
 
