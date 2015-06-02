@@ -155,6 +155,65 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
                         'value' => $filesystem->url() . '/srv/www/data'
                     ]
                 ]
+            ],
+            'no_server_name' => [
+                'config' => [
+                    'server_alias' => 'example.com',
+                    'document_root' => $filesystem->url() . '/srv/www/data'
+                ],
+                'attributes' => [
+                    ApacheVHostNode::ADDRESS => '*:80',
+                ],
+                'properties' => [
+                    ServerAliasProperty::NAME => [
+                        'class' => 'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerAliasProperty',
+                        'value' => 'example.com'
+                    ],
+                    DocumentRootProperty::NAME => [
+                        'class' => 'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\DocumentRootProperty',
+                        'value' => $filesystem->url() . '/srv/www/data'
+                    ]
+                ]
+            ],
+
+            'no_server_alias' => [
+                'config' => [
+                    'server_name' => 'www.example.com',
+                    'document_root' => $filesystem->url() . '/srv/www/data'
+                ],
+                'attributes' => [
+                    ApacheVHostNode::ADDRESS => '*:80',
+                ],
+                'properties' => [
+                    ServerNameProperty::NAME => [
+                        'class' => 'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerNameProperty',
+                        'value' => 'www.example.com',
+                    ],
+                    DocumentRootProperty::NAME => [
+                        'class' => 'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\DocumentRootProperty',
+                        'value' => $filesystem->url() . '/srv/www/data'
+                    ]
+                ]
+            ],
+
+            'no_document_root' => [
+                'config' => [
+                    'server_name' => 'www.example.com',
+                    'server_alias' => 'example.com',
+                ],
+                'attributes' => [
+                    ApacheVHostNode::ADDRESS => '*:80',
+                ],
+                'properties' => [
+                    ServerNameProperty::NAME => [
+                        'class' => 'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerNameProperty',
+                        'value' => 'www.example.com',
+                    ],
+                    ServerAliasProperty::NAME => [
+                        'class' => 'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerAliasProperty',
+                        'value' => 'example.com'
+                    ]
+                ]
             ]
         ];
     }

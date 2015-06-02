@@ -36,14 +36,19 @@ class ApacheVHostNodeFactory implements NodeFactoryInterface
             $port = $nodeConfiguration['port'];
         }
 
-        $serverName = $nodeConfiguration['server_name'];
-        $serverAlias = $nodeConfiguration['server_alias'];
-        $documentRoot = $nodeConfiguration['document_root'];
-
         $vhostNode->setAddress($ipAddress, $port);
-        $vhostNode->setServerName($serverName);
-        $vhostNode->setServerAlias($serverAlias);
-        $vhostNode->setDocumentRoot($documentRoot);
+
+        if (isset($nodeConfiguration['server_name'])) {
+            $vhostNode->setServerName($nodeConfiguration['server_name']);
+        }
+
+        if (isset($nodeConfiguration['server_alias'])) {
+            $vhostNode->setServerAlias($nodeConfiguration['server_alias']);
+        }
+
+        if (isset($nodeConfiguration['document_root'])) {
+            $vhostNode->setDocumentRoot($nodeConfiguration['document_root']);
+        }
 
         if (isset($nodeConfiguration['directories'])) {
             foreach ($nodeConfiguration['directories'] as $directoryConfig) {
