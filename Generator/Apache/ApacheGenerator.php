@@ -34,7 +34,7 @@ class ApacheGenerator implements GeneratorInterface
      */
     public function generate(array $config)
     {
-        $node = $this->factory->createNode($config);
+        $node = $this->factory->createNodes($config);
         $config = $this->formatter->createConfig([$node]);
 
         return $config;

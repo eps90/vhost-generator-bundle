@@ -22,7 +22,7 @@ class ApacheVHostNodeFactory implements NodeFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function createNode(array $nodesConfiguration)
+    public function createNodes(array $nodesConfiguration)
     {
         $nodes = [];
         foreach ($nodesConfiguration as $nodeConfiguration) {
@@ -53,7 +53,7 @@ class ApacheVHostNodeFactory implements NodeFactoryInterface
             }
 
             if (isset($nodeConfiguration['directories'])) {
-                $directoryNodes = $this->directoryNodeFactory->createNode($nodeConfiguration['directories']);
+                $directoryNodes = $this->directoryNodeFactory->createNodes($nodeConfiguration['directories']);
                 foreach ($directoryNodes as $directoryNode) {
                     $vhostNode->addDirectoryNode($directoryNode);
                 }

@@ -246,7 +246,7 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
 
         $factory = new ApacheVHostNodeFactory($directoryNodeFactory);
         /** @var ApacheVHostNode[] $actual */
-        $actual = $factory->createNode($config);
+        $actual = $factory->createNodes($config);
 
         foreach ($attributes as $attributeName => $attributeValue) {
             $attribute = $actual[0]->getAttributes()[$attributeName];
@@ -335,13 +335,13 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $directoryNodeFactory->expects($this->once())
-            ->method('createNode')
+            ->method('createNodes')
             ->with($config[0]['directories'])
             ->willReturn([$directoryNodeOne, $directoryNodeTwo]);
 
         $factory = new ApacheVHostNodeFactory($directoryNodeFactory);
         /** @var ApacheVHostNode[] $actual */
-        $actual = $factory->createNode($config);
+        $actual = $factory->createNodes($config);
         $this->assertEquals([$directoryNodeOne, $directoryNodeTwo], $actual[0]->getNodes());
     }
 }

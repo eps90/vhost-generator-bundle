@@ -17,5 +17,5 @@ interface NodeFactoryInterface
      * @param array $nodesConfiguration
      * @return NodeInterface[]
      */
-    public function createNode(array $nodesConfiguration);
+    public function createNodes(array $nodesConfiguration);
 }

@@ -17,7 +17,7 @@ class DirectoryNodeFactory implements NodeFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function createNode(array $nodesConfiguration)
+    public function createNodes(array $nodesConfiguration)
     {
         $nodes = [];
         foreach ($nodesConfiguration as $nodeConfiguration) {

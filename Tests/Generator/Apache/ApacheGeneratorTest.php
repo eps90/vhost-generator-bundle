@@ -22,7 +22,7 @@ class ApacheGeneratorTest extends \PHPUnit_Framework_TestCase
 
         $factory = $this->getMock('Eps\VhostGeneratorBundle\Generator\Node\Factory\NodeFactoryInterface');
         $factory->expects($this->once())
-            ->method('createNode')
+            ->method('createNodes')
             ->with($config)
             ->willReturn($node);
 

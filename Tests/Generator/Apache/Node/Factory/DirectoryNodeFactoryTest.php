@@ -205,7 +205,7 @@ class DirectoryNodeFactoryTest extends \PHPUnit_Framework_TestCase
     public function itShouldCreateDirectoryNodeFromConfig($config, $attributes, $properties)
     {
         $factory = new DirectoryNodeFactory();
-        $directoryNodes = $factory->createNode($config);
+        $directoryNodes = $factory->createNodes($config);
 
         foreach ($attributes as $attributeName => $attributeValue) {
             $attribute = $directoryNodes[0]->getAttributes()[$attributeName];
@@ -236,6 +236,6 @@ class DirectoryNodeFactoryTest extends \PHPUnit_Framework_TestCase
         ];
 
         $factory = new DirectoryNodeFactory();
-        $factory->createNode($config);
+        $factory->createNodes($config);
     }
 }
