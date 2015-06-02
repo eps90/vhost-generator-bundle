@@ -317,7 +317,6 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @dataProvider complexConfigProvider
-     * @todo Check whether directories are bound to VHost
      */
     public function itShouldCreateNestedDirectoryNodeWithGivenConfiguration($config)
     {
