@@ -9,6 +9,8 @@ use Eps\VhostGeneratorBundle\Generator\Node\Factory\NodeFactoryInterface;
  * Class ApacheVHostNodeFactory
  * @package Eps\VhostGeneratorBundle\Generator\Apache\Node\Factory
  * @author Jakub Turek <ja@kubaturek.pl>
+ * @todo Check whether server_name is present
+ * @todo Check whether document_root is present
  */
 class ApacheVHostNodeFactory implements NodeFactoryInterface
 {
