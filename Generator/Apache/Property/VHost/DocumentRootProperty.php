@@ -2,26 +2,16 @@
 
 namespace Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost;
 
-use Eps\VhostGeneratorBundle\Generator\Property\ValidatablePropertyInterface;
+use Eps\VhostGeneratorBundle\Generator\Property\StringProperty;
 
 /**
  * Class DocumentRootProperty
  * @package Eps\VhostGeneratorBundle\Generator\Apache\Property
  * @author Jakub Turek <ja@kubaturek.pl>
  */
-class DocumentRootProperty implements ValidatablePropertyInterface
+class DocumentRootProperty extends StringProperty
 {
     const NAME = 'DocumentRoot';
-
-    protected $value;
-
-    /**
-     * @param string $documentRoot
-     */
-    public function __construct($documentRoot)
-    {
-        $this->value = $documentRoot;
-    }
 
     /**
      * Returns name of the property.
@@ -32,15 +22,6 @@ class DocumentRootProperty implements ValidatablePropertyInterface
     {
         return self::NAME;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
     /**
      * Determines whether property value is valid
      *
@@ -48,6 +29,6 @@ class DocumentRootProperty implements ValidatablePropertyInterface
      */
     public function isValid()
     {
-        return is_string($this->value) && file_exists($this->value);
+        return parent::isValid() && file_exists($this->value);
     }
 }

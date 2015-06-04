@@ -2,17 +2,15 @@
 
 namespace Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory;
 
-use Eps\VhostGeneratorBundle\Generator\Property\AbstractProperty;
-use Eps\VhostGeneratorBundle\Generator\Property\PropertyInterface;
+use Eps\VhostGeneratorBundle\Generator\Property\StringProperty;
 
 /**
  * Class RequireProperty
  * @package Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory
  * @author Jakub Turek <ja@kubaturek.pl>
- * @todo Let RequireProperty implement ValidatablePropertyInterface
  * @todo Extend RequireProperty with advanced values such as ip, users, etc.
  */
-class RequireProperty extends AbstractProperty
+class RequireProperty extends StringProperty
 {
     const NAME = 'Require';
 

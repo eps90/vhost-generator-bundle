@@ -2,6 +2,7 @@
 
 namespace Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost;
 
+use Eps\VhostGeneratorBundle\Generator\Property\StringProperty;
 use Eps\VhostGeneratorBundle\Generator\Property\ValidatablePropertyInterface;
 
 /**
@@ -10,16 +11,9 @@ use Eps\VhostGeneratorBundle\Generator\Property\ValidatablePropertyInterface;
  * @author Jakub Turek <ja@kubaturek.pl>
  * @todo Allow to add array of values
  */
-class ServerNameProperty implements ValidatablePropertyInterface
+class ServerNameProperty extends StringProperty
 {
     const NAME = 'ServerName';
-
-    protected $value;
-
-    public function __construct($serverName)
-    {
-        $this->value = $serverName;
-    }
 
     /**
      * {@inheritdoc}
@@ -27,21 +21,5 @@ class ServerNameProperty implements ValidatablePropertyInterface
     public function getName()
     {
         return self::NAME;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isValid()
-    {
-        return is_string($this->value) && !empty($this->value);
     }
 }
