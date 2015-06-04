@@ -2,23 +2,23 @@
 
 namespace Eps\VhostGeneratorBundle\Tests\Generator\Property;
 
-use Eps\VhostGeneratorBundle\Generator\Property\Property;
+use Eps\VhostGeneratorBundle\Generator\Property\AbstractProperty;
 
 /**
- * Class PropertyTest
+ * Class AbstractPropertyTest
  * @package Eps\VhostGeneratorBundle\Tests\Generator\Property
  * @author Jakub Turek <ja@kubaturek.pl>
  */
-class PropertyTest extends \PHPUnit_Framework_TestCase
+class AbstractPropertyTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
      */
     public function itShouldContainValue()
     {
-        /** @var Property $property */
+        /** @var AbstractProperty $property */
         $property = $this->getMockForAbstractClass(
-            'Eps\VhostGeneratorBundle\Generator\Property\Property',
+            'Eps\VhostGeneratorBundle\Generator\Property\AbstractProperty',
             ['PROPERTY_VALUE']
         );
 

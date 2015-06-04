@@ -3,11 +3,11 @@
 namespace Eps\VhostGeneratorBundle\Generator\Property;
 
 /**
- * Class Property
- * @package Eps\VhostGeneratorBundle\Generator\Property
+ * Class AbstractProperty
+ * @package Eps\VhostGeneratorBundle\Generator\AbstractProperty
  * @author Jakub Turek <ja@kubaturek.pl>
  */
-abstract class Property implements PropertyInterface
+abstract class AbstractProperty implements PropertyInterface
 {
     /**
      * @var mixed Property value
