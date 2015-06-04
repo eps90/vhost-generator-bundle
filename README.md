@@ -1,5 +1,7 @@
 # VHost Generator Bundle
 
+## Library under heavy development! Use it on your own risk!
+
 ## TODO:
 
 - **List command** - to list all available vhosts (needs some parser)
