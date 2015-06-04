@@ -9,21 +9,14 @@ namespace Eps\VhostGeneratorBundle\Generator\Property;
  */
 abstract class Property implements PropertyInterface
 {
-    protected $name;
+    /**
+     * @var mixed Property value
+     */
     protected $value;
 
-    public function __construct($name, $value = null)
+    public function __construct($value)
     {
-        $this->name = $name;
         $this->value = $value;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**

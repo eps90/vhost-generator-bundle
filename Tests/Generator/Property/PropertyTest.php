@@ -12,36 +12,17 @@ use Eps\VhostGeneratorBundle\Generator\Property\Property;
 class PropertyTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Property
-     */
-    private $property;
-
-    /**
-     * @before
-     */
-    public function before()
-    {
-        $this->property = $this->getMockForAbstractClass(
-            'Eps\VhostGeneratorBundle\Generator\Property\Property',
-            ['PROPERTY_NAME', 'PROPERTY_VALUE']
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function itShouldContainName()
-    {
-        $actual = $this->property->getName();
-        $this->assertEquals('PROPERTY_NAME', $actual);
-    }
-
-    /**
      * @test
      */
     public function itShouldContainValue()
     {
-        $actual = $this->property->getValue();
+        /** @var Property $property */
+        $property = $this->getMockForAbstractClass(
+            'Eps\VhostGeneratorBundle\Generator\Property\Property',
+            ['PROPERTY_VALUE']
+        );
+
+        $actual = $property->getValue();
         $this->assertEquals('PROPERTY_VALUE', $actual);
     }
 }
