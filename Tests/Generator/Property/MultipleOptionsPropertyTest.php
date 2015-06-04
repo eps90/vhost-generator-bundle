@@ -33,7 +33,6 @@ class MultipleOptionsPropertyTest extends \PHPUnit_Framework_TestCase
         return [
             [['']],
             [[]],
-            [[true]],
             [[null]]
         ];
     }

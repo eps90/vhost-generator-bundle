@@ -22,7 +22,7 @@ abstract class MultipleOptionsProperty extends AbstractProperty implements Valid
             return false;
         } else {
             foreach ($this->value as $value) {
-                if (!is_string($value)  || empty($value)) {
+                if (empty($value)) {
                     return false;
                 }
             }

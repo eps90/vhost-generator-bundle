@@ -2,6 +2,7 @@
 
 namespace Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory;
 
+use Eps\VhostGeneratorBundle\Generator\Property\MultipleOptionsProperty;
 use Eps\VhostGeneratorBundle\Generator\Property\ValidatablePropertyInterface;
 
 /**
@@ -10,7 +11,7 @@ use Eps\VhostGeneratorBundle\Generator\Property\ValidatablePropertyInterface;
  * @author Jakub Turek <ja@kubaturek.pl>
  * @todo In case when string is input, try to detect correct value from acceptable ones
  */
-class OptionsProperty implements ValidatablePropertyInterface
+class OptionsProperty extends MultipleOptionsProperty
 {
     const NAME = 'Options';
 
@@ -60,11 +61,6 @@ class OptionsProperty implements ValidatablePropertyInterface
     const SYM_LINKS_IF_OWNER_MATCH = 'SymLinksIfOwnerMatch';
 
     /**
-     * @var array Options
-     */
-    protected $options = [];
-
-    /**
      * Constructor.
      * Sets the options. Input array should accept option name as key and boolean as value.
      * Value in array determines whether the option will be enabled or not.
@@ -99,7 +95,7 @@ class OptionsProperty implements ValidatablePropertyInterface
             }
         }
 
-        $this->options = $result;
+        $this->value = $result;
     }
 
     /**
@@ -117,10 +113,10 @@ class OptionsProperty implements ValidatablePropertyInterface
     {
         $result = [];
 
-        if (array_fill(0, count($this->options), true) == array_values($this->options)) {
-            $result = array_keys($this->options);
+        if (array_fill(0, count($this->value), true) == array_values($this->value)) {
+            $result = array_keys($this->value);
         } else {
-            foreach ($this->options as $optionName => $enabled) {
+            foreach ($this->value as $optionName => $enabled) {
                 $result[] = ($enabled ? '+' : '-') . $optionName;
             }
         }
@@ -135,7 +131,7 @@ class OptionsProperty implements ValidatablePropertyInterface
      */
     public function getOptions()
     {
-        return $this->options;
+        return $this->value;
     }
 
     /**
@@ -143,6 +139,10 @@ class OptionsProperty implements ValidatablePropertyInterface
      */
     public function isValid()
     {
+        if (!parent::isValid()) {
+            return false;
+        }
+
         $acceptableValues = [
             OptionsProperty::ALL,
             OptionsProperty::NONE,
@@ -155,7 +155,7 @@ class OptionsProperty implements ValidatablePropertyInterface
             OptionsProperty::SYM_LINKS_IF_OWNER_MATCH
         ];
 
-        foreach ($this->options as $optionName => $optionValue) {
+        foreach ($this->value as $optionName => $optionValue) {
             if (!in_array($optionName, $acceptableValues)) {
                 return false;
             }

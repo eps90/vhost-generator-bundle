@@ -2,6 +2,7 @@
 
 namespace Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory;
 
+use Eps\VhostGeneratorBundle\Generator\Property\MultipleOptionsProperty;
 use Eps\VhostGeneratorBundle\Generator\Property\ValidatablePropertyInterface;
 
 /**
@@ -10,7 +11,7 @@ use Eps\VhostGeneratorBundle\Generator\Property\ValidatablePropertyInterface;
  * @author Jakub Turek <ja@kubaturek.pl>
  * @todo In case when string is input, try to detect correct value from acceptable ones
  */
-class AllowOverrideProperty implements ValidatablePropertyInterface
+class AllowOverrideProperty extends MultipleOptionsProperty
 {
     const NAME = 'AllowOverride';
 
@@ -59,11 +60,6 @@ class AllowOverrideProperty implements ValidatablePropertyInterface
      */
     const NONFATAL_ALL = 'Nonfatal=All';
 
-    /**
-     * @var array AllowOverride options
-     */
-    protected $options = [];
-
     public function __construct(array $options)
     {
         $result = [];
@@ -82,7 +78,7 @@ class AllowOverrideProperty implements ValidatablePropertyInterface
             }
         }
 
-        $this->options = array_unique($result);
+        $this->value = array_unique($result);
     }
 
     /**
@@ -98,12 +94,17 @@ class AllowOverrideProperty implements ValidatablePropertyInterface
      */
     public function getValue()
     {
-        return implode(' ', $this->options);
+        return implode(' ', $this->value);
     }
 
+    /**
+     * Returns the options array
+     *
+     * @return array
+     */
     public function getOptions()
     {
-        return $this->options;
+        return $this->value;
     }
 
     /**
@@ -111,6 +112,10 @@ class AllowOverrideProperty implements ValidatablePropertyInterface
      */
     public function isValid()
     {
+        if (!parent::isValid()) {
+            return false;
+        }
+
         $acceptableValues = [
             AllowOverrideProperty::ALL,
             AllowOverrideProperty::NONE,
@@ -123,7 +128,7 @@ class AllowOverrideProperty implements ValidatablePropertyInterface
             AllowOverrideProperty::NONFATAL_OVERRIDE
         ];
 
-        foreach ($this->options as $option) {
+        foreach ($this->value as $option) {
             if (!in_array($option, $acceptableValues)) {
                 return false;
             }
