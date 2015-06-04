@@ -2,6 +2,7 @@
 
 namespace Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory;
 
+use Eps\VhostGeneratorBundle\Generator\Property\AbstractProperty;
 use Eps\VhostGeneratorBundle\Generator\Property\PropertyInterface;
 
 /**
@@ -11,16 +12,9 @@ use Eps\VhostGeneratorBundle\Generator\Property\PropertyInterface;
  * @todo Let RequireProperty implement ValidatablePropertyInterface
  * @todo Extend RequireProperty with advanced values such as ip, users, etc.
  */
-class RequireProperty implements PropertyInterface
+class RequireProperty extends AbstractProperty
 {
     const NAME = 'Require';
-
-    protected $value;
-
-    public function __construct($value)
-    {
-        $this->value = $value;
-    }
 
     /**
      * {@inheritdoc}
@@ -28,13 +22,5 @@ class RequireProperty implements PropertyInterface
     public function getName()
     {
         return self::NAME;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getValue()
-    {
-        return $this->value;
     }
 }
