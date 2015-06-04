@@ -1,13 +1,12 @@
 # VHost Generator Bundle
+[![Build Status](https://travis-ci.org/eps90/vhost-generator-bundle.svg?branch=master)](https://travis-ci.org/eps90/vhost-generator-bundle)
+[![Coverage Status](https://coveralls.io/repos/eps90/vhost-generator-bundle/badge.svg?branch=master)](https://coveralls.io/r/eps90/vhost-generator-bundle?branch=master)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/446868d6-240b-43be-835f-fbfcac6425fc/mini.png)](https://insight.sensiolabs.com/projects/446868d6-240b-43be-835f-fbfcac6425fc)
 
 ## Library under heavy development! Use it on your own risk!
 
-## TODO:
+## List of thing to do before first release:
 
 - **List command** - to list all available vhosts (needs some parser)
 - **Disable command** - disable vhosts configured with this application
 - **Composer installer** - to make application able to install vhosts on install/update(?)
-- **ApacheVhostNode**:
-    - logs path properties
-    
-    
