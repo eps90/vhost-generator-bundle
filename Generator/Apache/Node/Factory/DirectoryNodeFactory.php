@@ -5,7 +5,6 @@ namespace Eps\VhostGeneratorBundle\Generator\Apache\Node\Factory;
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\DirectoryNode;
 use Eps\VhostGeneratorBundle\Generator\Exception\MissingPropertyException;
 use Eps\VhostGeneratorBundle\Generator\Node\Factory\NodeFactoryInterface;
-use Eps\VhostGeneratorBundle\Generator\Node\NodeInterface;
 
 /**
  * Class DirectoryNodeProperty

@@ -1,5 +1,7 @@
 {
     "name": "eps90/vhost-generator-bundle",
+    "description": "Symfony2 Bundle for generating per-project vhost configuration files",
+    "license": "Apache-2.0",
     "require": {
         "symfony/framework-bundle": "~2.6",
         "symfony/process": "~2.6",
