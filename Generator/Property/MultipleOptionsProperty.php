@@ -2,8 +2,6 @@
 
 namespace Eps\VhostGeneratorBundle\Generator\Property;
 
-use Symfony\Component\Config\Definition\Processor;
-
 /**
  * Class MultipleOptionsProperty
  * @package Eps\VhostGeneratorBundle\Generator\Property

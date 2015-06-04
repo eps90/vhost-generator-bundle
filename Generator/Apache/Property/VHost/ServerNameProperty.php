@@ -3,7 +3,6 @@
 namespace Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost;
 
 use Eps\VhostGeneratorBundle\Generator\Property\StringProperty;
-use Eps\VhostGeneratorBundle\Generator\Property\ValidatablePropertyInterface;
 
 /**
  * Class ServerNameProperty

@@ -3,7 +3,6 @@
 namespace Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory;
 
 use Eps\VhostGeneratorBundle\Generator\Property\MultipleOptionsProperty;
-use Eps\VhostGeneratorBundle\Generator\Property\ValidatablePropertyInterface;
 
 /**
  * Class OptionsProperty
