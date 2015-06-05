@@ -4,6 +4,7 @@ namespace Eps\VhostGeneratorBundle\Generator\Apache\Node;
 
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowOverrideProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\DenyProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\OptionsProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\RequireProperty;
 use Eps\VhostGeneratorBundle\Generator\Exception\ValidationException;
@@ -124,7 +125,7 @@ class DirectoryNode implements NodeInterface
      * Sets the Allow property
      *
      * @param string|AllowProperty $allow
-     * @return $this
+     * @return self
      */
     public function setAllow($allow)
     {
@@ -133,6 +134,23 @@ class DirectoryNode implements NodeInterface
         }
 
         $this->addProperty(AllowProperty::NAME, $allow, $this->properties);
+
+        return $this;
+    }
+
+    /**
+     * Sets the Deny property
+     *
+     * @param string|DenyProperty $deny
+     * @return self
+     */
+    public function setDeny($deny)
+    {
+        if (!($deny instanceof DenyProperty)) {
+            $deny = new DenyProperty($deny);
+        }
+
+        $this->addProperty(DenyProperty::NAME, $deny, $this->properties);
 
         return $this;
     }

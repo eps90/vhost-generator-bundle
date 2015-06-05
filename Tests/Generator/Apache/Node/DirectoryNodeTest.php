@@ -5,6 +5,7 @@ namespace Eps\VhostGeneratorBundle\Tests\Generator\Apache\Node;
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\DirectoryNode;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowOverrideProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\DenyProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\OptionsProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\RequireProperty;
 use org\bovigo\vfs\vfsStream;
@@ -260,5 +261,23 @@ class DirectoryNodeTest extends \PHPUnit_Framework_TestCase
         $actual = $node->getNodes();
         $this->assertInternalType('array', $actual);
         $this->assertEmpty($actual);
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldAllowToAddDenyProperty()
+    {
+        $denyPropertyValue = 'all';
+        $node = new DirectoryNode();
+        $node->setDeny($denyPropertyValue);
+
+        /** @var DenyProperty $denyProperty */
+        $denyProperty = $node->getProperties()[DenyProperty::NAME];
+        $this->assertInstanceOf(
+            'Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\DenyProperty',
+            $denyProperty
+        );
+        $this->assertEquals('from ' . $denyPropertyValue, $denyProperty->getValue());
     }
 }
