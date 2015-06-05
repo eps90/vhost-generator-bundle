@@ -5,6 +5,7 @@ namespace Eps\VhostGeneratorBundle\Tests\Generator\Apache\Node\Factory;
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\ApacheVHostNode;
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\Factory\ApacheVHostNodeFactory;
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\Factory\DirectoryNodeFactory;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\CustomLogProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\DocumentRootProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ErrorLogProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerAliasProperty;
@@ -65,7 +66,8 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
                         'server_name' => 'www.example.com',
                         'server_aliases' => ['example.com'],
                         'document_root' => $filesystem->url() . '/srv/www/data',
-                        'error_log' => '/var/log/apache2/error.log'
+                        'error_log' => '/var/log/apache2/error.log',
+                        'custom_log' => '/var/log/apache2/access.log'
                     ]
                 ],
                 'attributes' => [
@@ -87,6 +89,10 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
                     ErrorLogProperty::NAME => [
                         'class' => 'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ErrorLogProperty',
                         'value' => '/var/log/apache2/error.log'
+                    ],
+                    CustomLogProperty::NAME => [
+                        'class' => 'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\CustomLogProperty',
+                        'value' => '/var/log/apache2/access.log combined'
                     ]
                 ]
             ],

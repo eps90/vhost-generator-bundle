@@ -63,6 +63,10 @@ class ApacheVHostNodeFactory implements NodeFactoryInterface
                 $vhostNode->setErrorLog($nodeConfiguration['error_log']);
             }
 
+            if (isset($nodeConfiguration['custom_log'])) {
+                $vhostNode->setCustomLog($nodeConfiguration['custom_log']);
+            }
+
             if (isset($nodeConfiguration['directories'])) {
                 $directoryNodes = $this->directoryNodeFactory->createNodes($nodeConfiguration['directories']);
                 foreach ($directoryNodes as $directoryNode) {
