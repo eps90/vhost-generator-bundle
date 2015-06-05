@@ -7,6 +7,7 @@ use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowOverridePr
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\DenyProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\OptionsProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\OrderProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\RequireProperty;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
@@ -279,5 +280,23 @@ class DirectoryNodeTest extends \PHPUnit_Framework_TestCase
             $denyProperty
         );
         $this->assertEquals('from ' . $denyPropertyValue, $denyProperty->getValue());
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldAllowToAddOrderProperty()
+    {
+        $orderValue = 'Allow,Deny';
+        $node = new DirectoryNode();
+        $node->setOrder($orderValue);
+
+        /** @var OrderProperty $orderProperty */
+        $orderProperty = $node->getProperties()[OrderProperty::NAME];
+        $this->assertInstanceOf(
+            'Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\OrderProperty',
+            $orderProperty
+        );
+        $this->assertEquals($orderValue, $orderProperty->getValue());
     }
 }

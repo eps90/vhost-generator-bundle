@@ -6,6 +6,7 @@ use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowOverridePr
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\DenyProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\OptionsProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\OrderProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\RequireProperty;
 use Eps\VhostGeneratorBundle\Generator\Exception\ValidationException;
 use Eps\VhostGeneratorBundle\Generator\Node\NodeInterface;
@@ -151,6 +152,23 @@ class DirectoryNode implements NodeInterface
         }
 
         $this->addProperty(DenyProperty::NAME, $deny, $this->properties);
+
+        return $this;
+    }
+
+    /**
+     * Sets the Order property
+     *
+     * @param string|OrderProperty $order
+     * @return self
+     */
+    public function setOrder($order)
+    {
+        if (!($order instanceof OrderProperty)) {
+            $order = new OrderProperty($order);
+        }
+
+        $this->addProperty(OrderProperty::NAME, $order, $this->properties);
 
         return $this;
     }
