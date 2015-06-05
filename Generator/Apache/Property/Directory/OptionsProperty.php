@@ -8,7 +8,6 @@ use Eps\VhostGeneratorBundle\Generator\Property\MultipleOptionsProperty;
  * Class OptionsProperty
  * @package Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory
  * @author Jakub Turek <ja@kubaturek.pl>
- * @todo In case when string is input, try to detect correct value from acceptable ones
  */
 class OptionsProperty extends MultipleOptionsProperty
 {
@@ -80,6 +79,8 @@ class OptionsProperty extends MultipleOptionsProperty
                 $value = true;
             }
 
+            $key = $this->detectOptionName($key);
+
             if ($key == self::ALL || $key == self::NONE) {
                 if ($includesAll && $includesNone) {
                     $result[self::ALL] = true;
@@ -95,6 +96,37 @@ class OptionsProperty extends MultipleOptionsProperty
         }
 
         $this->value = $result;
+    }
+
+    /**
+     * Detect name of option
+     *
+     * @param string $value
+     * @return string
+     */
+    private function detectOptionName($value)
+    {
+        $value = preg_replace('/[\s_\-]/', '', $value);
+        $availableOptions = [
+            OptionsProperty::ALL,
+            OptionsProperty::NONE,
+            OptionsProperty::EXEC_GGI,
+            OptionsProperty::FOLLOW_SYM_LINKS,
+            OptionsProperty::INCLUDES,
+            OptionsProperty::INCLUDES_NO_EXEC,
+            OptionsProperty::INDEXES,
+            OptionsProperty::MULTI_VIEWS,
+            OptionsProperty::SYM_LINKS_IF_OWNER_MATCH
+        ];
+
+        foreach ($availableOptions as $option) {
+            if (strtolower($option) == strtolower($value)) {
+                $value = $option;
+                break;
+            }
+        }
+
+        return $value;
     }
 
     /**

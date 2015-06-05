@@ -204,4 +204,37 @@ class OptionsPropertyTest extends \PHPUnit_Framework_TestCase
         $actual = $property->getValue();
         $this->assertEquals($expected, $actual);
     }
+
+    public function toDetectValuesProvider()
+    {
+        return [
+            [
+                'options' => ['all'],
+                'expected' => [OptionsProperty::ALL => true]
+            ],
+            [
+                'options' => ['exec_cgi' => true],
+                'expected' => [OptionsProperty::EXEC_GGI => true]
+            ],
+            [
+                'options' => ['execcgi'],
+                'expected' => [OptionsProperty::EXEC_GGI => true]
+            ],
+            [
+                'options' => ['EXECCGI'],
+                'expected' => [OptionsProperty::EXEC_GGI => true]
+            ]
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider toDetectValuesProvider
+     */
+    public function itShouldAutomaticallyDetectCorrectValue($options, $expected)
+    {
+        $optionsProperty = new OptionsProperty($options);
+        $this->assertEquals($expected, $optionsProperty->getOptions());
+        $this->assertTrue($optionsProperty->isValid());
+    }
 }
