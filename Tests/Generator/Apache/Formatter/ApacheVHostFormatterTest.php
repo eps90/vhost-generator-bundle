@@ -8,6 +8,7 @@ use Eps\VhostGeneratorBundle\Generator\Apache\Node\DirectoryNode;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowOverrideProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\DenyProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\OrderProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\RequireProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\DocumentRootProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerAliasProperty;
@@ -105,6 +106,7 @@ CONFIG;
         AllowOverride All
         Allow from all
         Deny from 127.0.0.1
+        Order Allow,Deny
         Require all granted
     </Directory>
 </VirtualHost>
@@ -184,6 +186,15 @@ CONFIG;
             ->method('getValue')
             ->willReturn('from 127.0.0.1');
 
+        $orderProperty = $this->getMock('Eps\VhostGeneratorBundle\Generator\Property\PropertyInterface');
+        $orderProperty->expects($this->once())
+            ->method('getName')
+            ->willReturn('Order');
+        $orderProperty->expects($this->once())
+            ->method('getValue')
+            ->willReturn('Allow,Deny');
+
+
         $requireProperty = $this->getMock('Eps\VhostGeneratorBundle\Generator\Property\PropertyInterface');
         $requireProperty->expects($this->once())
             ->method('getName')
@@ -210,6 +221,7 @@ CONFIG;
                     AllowOverrideProperty::NAME => $allowOverrideProperty,
                     AllowProperty::NAME => $allowProperty,
                     DenyProperty::NAME => $denyProperty,
+                    OrderProperty::NAME => $orderProperty,
                     RequireProperty::NAME => $requireProperty
                 ]
             );
