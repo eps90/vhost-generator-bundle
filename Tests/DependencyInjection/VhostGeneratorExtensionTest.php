@@ -83,4 +83,47 @@ class VhostGeneratorExtensionTest extends \PHPUnit_Framework_TestCase
             $containerBuilder->getParameter('vhost_generator.apache.vhosts')
         );
     }
+
+    /**
+     * @test
+     */
+    public function itShouldHaveConfiguredNodeFactoryServices()
+    {
+        $containerBuilder = new ContainerBuilder();
+        $config = [];
+
+        $extension = new VhostGeneratorExtension();
+        $extension->load($config, $containerBuilder);
+
+        $this->assertTrue($containerBuilder->has('vhost_generator.apache.vhost_node_factory'));
+        $this->assertTrue($containerBuilder->has('vhost_generator.apache.directory_node_factory'));
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldHaveConfiguredVHostGeneratorsServices()
+    {
+        $containerBuilder = new ContainerBuilder();
+        $config = [];
+
+        $extension = new VhostGeneratorExtension();
+        $extension->load($config, $containerBuilder);
+
+        $this->assertTrue($containerBuilder->has('vhost_generator.apache.generator'));
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldHaveConfiguredFormatterServices()
+    {
+        $containerBuilder = new ContainerBuilder();
+        $config = [];
+
+        $extension = new VhostGeneratorExtension();
+        $extension->load($config, $containerBuilder);
+
+        $this->assertTrue($containerBuilder->has('vhost_generator.apache.formatter'));
+    }
 }
