@@ -32,6 +32,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                                     'document_root' => '/srv/www/data',
                                     'ip_address' => '127.0.0.1',
                                     'port' => '8080',
+                                    'error_log' => '/var/log/apache2/error.log',
                                     'directories' => [
                                         [
                                             'path' => '/srv/www/data',
