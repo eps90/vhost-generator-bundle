@@ -8,7 +8,6 @@ use Eps\VhostGeneratorBundle\Generator\Property\StringProperty;
  * Class ServerNameProperty
  * @package Eps\VhostGeneratorBundle\Generator\Apache\Property
  * @author Jakub Turek <ja@kubaturek.pl>
- * @todo Allow to add array of values
  */
 class ServerNameProperty extends StringProperty
 {

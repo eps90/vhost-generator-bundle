@@ -212,19 +212,19 @@ class ApacheVHostNodeTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function itShouldAllowToSetServerAlias()
+    public function itShouldAllowToSetServerAliases()
     {
-        $serverAliasProp = 'www.example.com';
+        $serverAliasProp = ['www.example.com'];
         $vhostNode = new ApacheVHostNode();
-        $vhostNode->setServerAlias($serverAliasProp);
+        $vhostNode->setServerAliases($serverAliasProp);
 
-        /** @var ServerNameProperty $serverName */
-        $serverName = $vhostNode->getProperties()[ServerAliasProperty::NAME];
+        /** @var ServerAliasProperty $serverAlias */
+        $serverAlias = $vhostNode->getProperties()[ServerAliasProperty::NAME];
         $this->assertInstanceOf(
             'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerAliasProperty',
-            $serverName
+            $serverAlias
         );
-        $this->assertEquals($serverName->getValue(), $serverAliasProp);
+        $this->assertEquals('www.example.com', $serverAlias->getValue());
     }
 
     /**
@@ -243,7 +243,7 @@ class ApacheVHostNodeTest extends \PHPUnit_Framework_TestCase
             ->willReturn(false);
 
         $vhostName = new ApacheVHostNode();
-        $vhostName->setServerAlias($serverNameProp);
+        $vhostName->setServerAliases($serverNameProp);
     }
 
     /**

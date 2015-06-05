@@ -46,8 +46,8 @@ class ApacheVHostNodeFactory implements NodeFactoryInterface
                 $vhostNode->setServerName($nodeConfiguration['server_name']);
             }
 
-            if (isset($nodeConfiguration['server_alias'])) {
-                $vhostNode->setServerAlias($nodeConfiguration['server_alias']);
+            if (isset($nodeConfiguration['server_aliases'])) {
+                $vhostNode->setServerAliases($nodeConfiguration['server_aliases']);
             }
 
             if (isset($nodeConfiguration['document_root'])) {

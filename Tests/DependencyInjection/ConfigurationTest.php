@@ -26,7 +26,9 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                             'vhosts' => [
                                 [
                                     'server_name' => 'www.example.com',
-                                    'server_alias' => 'example.com',
+                                    'server_aliases' => [
+                                        'example.com'
+                                    ],
                                     'document_root' => '/srv/www/data',
                                     'ip_address' => '127.0.0.1',
                                     'port' => '8080',
@@ -90,7 +92,9 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                             'vhosts' => [
                                 [
                                     'server_name' => 'www.example.com',
-                                    'server_alias' => 'example.com',
+                                    'server_aliases' => [
+                                        'example.com'
+                                    ],
                                     'document_root' => '/srv/www/data',
                                     'ip_address' => '127.0.0.1',
                                     'port' => '8080',
@@ -121,7 +125,9 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                             'output_path' => 'prod.conf',
                             'vhosts' => [
                                 [
-                                    'server_alias' => 'example.com',
+                                    'server_aliases' => [
+                                        'example.com'
+                                    ],
                                     'document_root' => '/srv/www/data',
                                     'ip_address' => '127.0.0.1',
                                     'port' => '8080',
@@ -153,7 +159,9 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                             'vhosts' => [
                                 [
                                     'server_name' => 'www.example.com',
-                                    'server_alias' => 'example.com',
+                                    'server_aliases' => [
+                                        'example.com'
+                                    ],
                                     'ip_address' => '127.0.0.1',
                                     'port' => '8080',
                                     'directories' => [
@@ -184,7 +192,9 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                             'vhosts' => [
                                 [
                                     'server_name' => 'www.example.com',
-                                    'server_alias' => 'example.com',
+                                    'server_aliases' => [
+                                        'example.com'
+                                    ],
                                     'document_root' => '/srv/www/data',
                                     'ip_address' => '127.0.0.1',
                                     'port' => '8080',

@@ -27,7 +27,9 @@ class VhostGeneratorExtensionTest extends \PHPUnit_Framework_TestCase
                     'vhosts' => [
                         [
                             'server_name' => 'www.example.com',
-                            'server_alias' => 'example.com',
+                            'server_aliases' => [
+                                'example.com'
+                            ],
                             'document_root' => '/srv/www/data',
                             'ip_address' => '127.0.0.1',
                             'port' => '8080',
@@ -57,7 +59,9 @@ class VhostGeneratorExtensionTest extends \PHPUnit_Framework_TestCase
             [
                 [
                     'server_name' => 'www.example.com',
-                    'server_alias' => 'example.com',
+                    'server_aliases' => [
+                        'example.com'
+                    ],
                     'document_root' => '/srv/www/data',
                     'ip_address' => '127.0.0.1',
                     'port' => '8080',

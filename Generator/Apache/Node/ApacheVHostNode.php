@@ -132,10 +132,10 @@ class ApacheVHostNode implements NodeInterface
     /**
      * Sets the server alias of Apache VHost
      *
-     * @param string|ServerAliasProperty $serverAlias
+     * @param array|ServerAliasProperty[] $serverAlias
      * @return self
      */
-    public function setServerAlias($serverAlias)
+    public function setServerAliases($serverAlias)
     {
         if (!($serverAlias instanceof ServerAliasProperty)) {
             $serverAlias = new ServerAliasProperty($serverAlias);

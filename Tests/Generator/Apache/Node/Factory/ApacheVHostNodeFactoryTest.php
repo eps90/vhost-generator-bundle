@@ -62,7 +62,7 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
                         'ip_address' => '127.0.0.1',
                         'port' => '8080',
                         'server_name' => 'www.example.com',
-                        'server_alias' => 'example.com',
+                        'server_aliases' => ['example.com'],
                         'document_root' => $filesystem->url() . '/srv/www/data'
                     ]
                 ],
@@ -89,7 +89,7 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
                     [
                         'ip_address' => '127.0.0.1',
                         'server_name' => 'www.example.com',
-                        'server_alias' => 'example.com',
+                        'server_aliases' => ['example.com'],
                         'document_root' => $filesystem->url() . '/srv/www/data'
                     ]
                 ],
@@ -116,7 +116,7 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
                     [
                         'port' => '80',
                         'server_name' => 'www.example.com',
-                        'server_alias' => 'example.com',
+                        'server_aliases' => ['example.com'],
                         'document_root' => $filesystem->url() . '/srv/www/data'
                     ]
                 ],
@@ -142,7 +142,7 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
                 'config' => [
                     [
                         'server_name' => 'www.example.com',
-                        'server_alias' => 'example.com',
+                        'server_aliases' => ['example.com'],
                         'document_root' => $filesystem->url() . '/srv/www/data'
                     ]
                 ],
@@ -167,7 +167,7 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
             'no_server_name' => [
                 'config' => [
                     [
-                        'server_alias' => 'example.com',
+                        'server_aliases' => ['example.com'],
                         'document_root' => $filesystem->url() . '/srv/www/data'
                     ]
                 ],
@@ -212,7 +212,7 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
                 'config' => [
                     [
                         'server_name' => 'www.example.com',
-                        'server_alias' => 'example.com'
+                        'server_aliases' => ['example.com']
                     ]
                 ],
                 'attributes' => [
@@ -284,7 +284,7 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
                         'ip_address' => '127.0.0.1',
                         'port' => '8080',
                         'server_name' => 'www.example.com',
-                        'server_alias' => 'example.com',
+                        'server_aliases' => ['example.com'],
                         'document_root' => $filesystem->url() . '/srv/www/data',
                         'directories' => [
                             [
