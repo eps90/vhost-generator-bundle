@@ -11,6 +11,13 @@ use Eps\VhostGeneratorBundle\Generator\Node\NodeInterface;
  */
 class MissingPropertyException extends \Exception
 {
+    /**
+     * @param NodeInterface $node Node object with missing property
+     * @param string $propertyName Missing property name
+     * @param string $message
+     * @param int $code
+     * @param \Exception $previous
+     */
     public function __construct(NodeInterface $node, $propertyName, $message = '', $code = 0, \Exception $previous = null)
     {
         $message = "Missing '$propertyName' in node {$node->getName()}";

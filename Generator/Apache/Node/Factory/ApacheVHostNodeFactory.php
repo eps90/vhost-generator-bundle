@@ -3,14 +3,15 @@
 namespace Eps\VhostGeneratorBundle\Generator\Apache\Node\Factory;
 
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\ApacheVHostNode;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\DocumentRootProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerNameProperty;
+use Eps\VhostGeneratorBundle\Generator\Exception\MissingPropertyException;
 use Eps\VhostGeneratorBundle\Generator\Node\Factory\NodeFactoryInterface;
 
 /**
  * Class ApacheVHostNodeFactory
  * @package Eps\VhostGeneratorBundle\Generator\Apache\Node\Factory
  * @author Jakub Turek <ja@kubaturek.pl>
- * @todo Check whether server_name is present
- * @todo Check whether document_root is present
  */
 class ApacheVHostNodeFactory implements NodeFactoryInterface
 {
@@ -44,6 +45,8 @@ class ApacheVHostNodeFactory implements NodeFactoryInterface
 
             if (isset($nodeConfiguration['server_name'])) {
                 $vhostNode->setServerName($nodeConfiguration['server_name']);
+            } else {
+                throw new MissingPropertyException($vhostNode, ServerNameProperty::NAME);
             }
 
             if (isset($nodeConfiguration['server_aliases'])) {
@@ -52,6 +55,8 @@ class ApacheVHostNodeFactory implements NodeFactoryInterface
 
             if (isset($nodeConfiguration['document_root'])) {
                 $vhostNode->setDocumentRoot($nodeConfiguration['document_root']);
+            } else {
+                throw new MissingPropertyException($vhostNode, DocumentRootProperty::NAME);
             }
 
             if (isset($nodeConfiguration['directories'])) {

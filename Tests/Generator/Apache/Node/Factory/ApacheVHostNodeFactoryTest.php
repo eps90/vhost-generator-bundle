@@ -164,27 +164,6 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
                     ]
                 ]
             ],
-            'no_server_name' => [
-                'config' => [
-                    [
-                        'server_aliases' => ['example.com'],
-                        'document_root' => $filesystem->url() . '/srv/www/data'
-                    ]
-                ],
-                'attributes' => [
-                    ApacheVHostNode::ADDRESS => '*:80',
-                ],
-                'properties' => [
-                    ServerAliasProperty::NAME => [
-                        'class' => 'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerAliasProperty',
-                        'value' => 'example.com'
-                    ],
-                    DocumentRootProperty::NAME => [
-                        'class' => 'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\DocumentRootProperty',
-                        'value' => $filesystem->url() . '/srv/www/data'
-                    ]
-                ]
-            ],
 
             'no_server_alias' => [
                 'config' => [
@@ -204,28 +183,6 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
                     DocumentRootProperty::NAME => [
                         'class' => 'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\DocumentRootProperty',
                         'value' => $filesystem->url() . '/srv/www/data'
-                    ]
-                ]
-            ],
-
-            'no_document_root' => [
-                'config' => [
-                    [
-                        'server_name' => 'www.example.com',
-                        'server_aliases' => ['example.com']
-                    ]
-                ],
-                'attributes' => [
-                    ApacheVHostNode::ADDRESS => '*:80',
-                ],
-                'properties' => [
-                    ServerNameProperty::NAME => [
-                        'class' => 'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerNameProperty',
-                        'value' => 'www.example.com',
-                    ],
-                    ServerAliasProperty::NAME => [
-                        'class' => 'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerAliasProperty',
-                        'value' => 'example.com'
                     ]
                 ]
             ]
@@ -342,5 +299,58 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
         /** @var ApacheVHostNode[] $actual */
         $actual = $factory->createNodes($config);
         $this->assertEquals([$directoryNodeOne, $directoryNodeTwo], $actual[0]->getNodes());
+    }
+
+    /**
+     * @test
+     * @expectedException \Eps\VhostGeneratorBundle\Generator\Exception\MissingPropertyException
+     */
+    public function itShouldThrowIfThereAreNoServerNameInConfig()
+    {
+        $structure = [
+            'srv' => [
+                'www' => [
+                    'data' => [
+                        'my_file.php' => "<?php echo 'OK'; ?>"
+                    ],
+                    'other' => [
+                        'my_file.php' => "<?php echo 'OK'; ?>"
+                    ]
+                ]
+            ]
+        ];
+
+        $filesystem = vfsStream::setup('root', null, $structure);
+
+        $config = [
+            [
+                'ip_address' => '127.0.0.1',
+                'port' => '8080',
+                'server_aliases' => ['example.com'],
+                'document_root' => $filesystem->url() . '/srv/www/data',
+            ]
+        ];
+
+        $factory = new ApacheVHostNodeFactory(new DirectoryNodeFactory());
+        $factory->createNodes($config);
+    }
+
+    /**
+     * @test
+     * @expectedException \Eps\VhostGeneratorBundle\Generator\Exception\MissingPropertyException
+     */
+    public function itShouldThrowIfThereAreNoDocumentRootInConfig()
+    {
+        $config = [
+            [
+                'ip_address' => '127.0.0.1',
+                'port' => '8080',
+                'server_name' => 'www.example.com',
+                'server_aliases' => ['example.com']
+            ]
+        ];
+
+        $factory = new ApacheVHostNodeFactory(new DirectoryNodeFactory());
+        $factory->createNodes($config);
     }
 }
