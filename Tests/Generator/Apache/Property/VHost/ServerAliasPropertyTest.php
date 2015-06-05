@@ -16,8 +16,18 @@ class ServerAliasPropertyTest extends \PHPUnit_Framework_TestCase
      */
     public function itShouldHaveName()
     {
-        $serverAliasProp = new ServerAliasProperty('example.com');
+        $serverAliasProp = new ServerAliasProperty(['example.com']);
         $expectedName = 'ServerAlias';
         $this->assertEquals($expectedName, $serverAliasProp->getName());
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldReturnConcatenatedValuesAsItsValue()
+    {
+        $serverAliasProp = new ServerAliasProperty(['example.com', 'test.example.com']);
+        $expectedValue = 'example.com test.example.com';
+        $this->assertEquals($expectedValue, $serverAliasProp->getValue());
     }
 }
