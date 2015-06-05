@@ -5,6 +5,7 @@ namespace Eps\VhostGeneratorBundle\Tests\Generator\Apache\Node;
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\ApacheVHostNode;
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\DirectoryNode;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\DocumentRootProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ErrorLogProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerAliasProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerNameProperty;
 use org\bovigo\vfs\vfsStream;
@@ -257,5 +258,20 @@ class ApacheVHostNodeTest extends \PHPUnit_Framework_TestCase
         $expected = [$directoryNode];
         $actual = $node->getNodes();
         $this->assertEquals($expected, $actual);
+    }
+
+    public function itShouldBeAbletoAddErrorLogProperty()
+    {
+        $errorLogProperty = '/var/log/apache2/error.log';
+        $vhostNode = new ApacheVHostNode();
+        $vhostNode->setErrorLog($errorLogProperty);
+
+        /** @var ErrorLogProperty $errorLog */
+        $errorLog = $vhostNode->getProperties()[ErrorLogProperty::NAME];
+        $this->assertInstanceOf(
+            'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ErrorLogProperty',
+            $errorLog
+        );
+        $this->assertEquals($errorLogProperty, $errorLog->getValue());
     }
 }

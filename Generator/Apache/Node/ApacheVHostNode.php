@@ -3,6 +3,7 @@
 namespace Eps\VhostGeneratorBundle\Generator\Apache\Node;
 
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\DocumentRootProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ErrorLogProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerAliasProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerNameProperty;
 use Eps\VhostGeneratorBundle\Generator\Exception\ValidationException;
@@ -142,6 +143,23 @@ class ApacheVHostNode implements NodeInterface
         }
 
         $this->addProperty(ServerAliasProperty::NAME, $serverAlias, $this->properties);
+
+        return $this;
+    }
+
+    /**
+     * Sets path to error log
+     *
+     * @param string|ErrorLogProperty $errorLog
+     * @return self
+     */
+    public function setErrorLog($errorLog)
+    {
+        if (!($errorLog instanceof ErrorLogProperty)) {
+            $errorLog = new ErrorLogProperty($errorLog);
+        }
+
+        $this->addProperty(ErrorLogProperty::NAME, $errorLog, $this->properties);
 
         return $this;
     }
