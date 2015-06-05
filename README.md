@@ -6,9 +6,10 @@
 
 ## Library under heavy development! Use it on your own risk!
 
-## List of thing to do before first release:
+## List of thing to do:
 
 - **List command** - to list all available vhosts (needs some parser)
 - **Disable command** - disable vhosts configured with this application
 - **Composer installer** - to make application able to install vhosts on install/update(?)
 - **Unit tests** - fix namespace. (*My IDE was not customized properly so test classes were generated with wrong ns)
+- **SSL related directives**
