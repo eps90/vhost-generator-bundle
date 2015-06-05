@@ -52,13 +52,23 @@ class OptionsPropertyTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($property->isValid());
     }
 
+    public function invalidOptionsProvider()
+    {
+        return [
+            [['SomeNonExistingProperty']],
+            [[null]],
+            [[]],
+            [['']]
+        ];
+    }
+
     /**
      * @test
+     * @dataProvider invalidOptionsProvider
      */
-    public function itShouldDetermineWhetherOptionsAreValid()
+    public function itShouldDetermineWhetherOptionsAreValid($options)
     {
-        $invalidPropertyName = 'SomeNonExistingProperty';
-        $property = new OptionsProperty([$invalidPropertyName => true]);
+        $property = new OptionsProperty($options);
         $this->assertFalse($property->isValid());
     }
 

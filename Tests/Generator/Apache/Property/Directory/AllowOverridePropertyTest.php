@@ -52,14 +52,21 @@ class AllowOverridePropertyTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($property->isValid());
     }
 
+    public function invalidValuesProvider()
+    {
+        return [
+            [['SomeNoExistingValue']],
+            [[]],
+            [[null]]
+        ];
+    }
+
     /**
      * @test
+     * @dataProvider invalidValuesProvider
      */
-    public function itShouldCheckWhetherValuesAreInvalid()
+    public function itShouldCheckWhetherValuesAreInvalid($options)
     {
-        $options = [
-            'SomeNonExistingOption'
-        ];
         $property = new AllowOverrideProperty($options);
         $this->assertFalse($property->isValid());
     }
