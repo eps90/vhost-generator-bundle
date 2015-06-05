@@ -13,3 +13,4 @@ script:
 
 after_script:
   - bin/coveralls -v
+  - bash <(curl -s https://codecov.io/bash)
