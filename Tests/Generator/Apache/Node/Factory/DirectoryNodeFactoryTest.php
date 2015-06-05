@@ -8,6 +8,7 @@ use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowOverridePr
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\DenyProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\OptionsProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\OrderProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\RequireProperty;
 use org\bovigo\vfs\vfsStream;
 
@@ -42,6 +43,7 @@ class DirectoryNodeFactoryTest extends \PHPUnit_Framework_TestCase
                         ],
                         'allow' => 'all',
                         'deny' => 'all',
+                        'order' => 'allow deny',
                         'options' => [
                             'ExecCGI',
                             'Indexes'
@@ -72,6 +74,10 @@ class DirectoryNodeFactoryTest extends \PHPUnit_Framework_TestCase
                     DenyProperty::NAME => [
                         'class' => 'Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\DenyProperty',
                         'value' => 'from all'
+                    ],
+                    OrderProperty::NAME => [
+                        'class' => 'Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\OrderProperty',
+                        'value' => 'Allow,Deny'
                     ]
                 ]
             ],

@@ -48,6 +48,10 @@ class DirectoryNodeFactory implements NodeFactoryInterface
                 $directoryNode->setRequire($nodeConfiguration['require']);
             }
 
+            if (isset($nodeConfiguration['order'])) {
+                $directoryNode->setOrder($nodeConfiguration['order']);
+            }
+
             $nodes[] = $directoryNode;
         }
 
