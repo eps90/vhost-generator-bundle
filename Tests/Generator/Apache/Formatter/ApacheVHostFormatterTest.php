@@ -7,6 +7,7 @@ use Eps\VhostGeneratorBundle\Generator\Apache\Node\ApacheVHostNode;
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\DirectoryNode;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowOverrideProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\DenyProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\RequireProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\DocumentRootProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerAliasProperty;
@@ -103,6 +104,7 @@ CONFIG;
     <Directory /srv/www/someData>
         AllowOverride All
         Allow from all
+        Deny from 127.0.0.1
         Require all granted
     </Directory>
 </VirtualHost>
@@ -174,6 +176,14 @@ CONFIG;
             ->method('getValue')
             ->willReturn('from all');
 
+        $denyProperty = $this->getMock('Eps\VhostGeneratorBundle\Generator\Property\PropertyInterface');
+        $denyProperty->expects($this->once())
+            ->method('getName')
+            ->willReturn('Deny');
+        $denyProperty->expects($this->once())
+            ->method('getValue')
+            ->willReturn('from 127.0.0.1');
+
         $requireProperty = $this->getMock('Eps\VhostGeneratorBundle\Generator\Property\PropertyInterface');
         $requireProperty->expects($this->once())
             ->method('getName')
@@ -199,6 +209,7 @@ CONFIG;
                 [
                     AllowOverrideProperty::NAME => $allowOverrideProperty,
                     AllowProperty::NAME => $allowProperty,
+                    DenyProperty::NAME => $denyProperty,
                     RequireProperty::NAME => $requireProperty
                 ]
             );
