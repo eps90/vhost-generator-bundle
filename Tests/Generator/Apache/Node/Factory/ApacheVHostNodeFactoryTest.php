@@ -6,6 +6,7 @@ use Eps\VhostGeneratorBundle\Generator\Apache\Node\ApacheVHostNode;
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\Factory\ApacheVHostNodeFactory;
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\Factory\DirectoryNodeFactory;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\DocumentRootProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ErrorLogProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerAliasProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerNameProperty;
 use org\bovigo\vfs\vfsStream;
@@ -63,7 +64,8 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
                         'port' => '8080',
                         'server_name' => 'www.example.com',
                         'server_aliases' => ['example.com'],
-                        'document_root' => $filesystem->url() . '/srv/www/data'
+                        'document_root' => $filesystem->url() . '/srv/www/data',
+                        'error_log' => '/var/log/apache2/error.log'
                     ]
                 ],
                 'attributes' => [
@@ -81,6 +83,10 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
                     DocumentRootProperty::NAME => [
                         'class' => 'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\DocumentRootProperty',
                         'value' => $filesystem->url() . '/srv/www/data'
+                    ],
+                    ErrorLogProperty::NAME => [
+                        'class' => 'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ErrorLogProperty',
+                        'value' => '/var/log/apache2/error.log'
                     ]
                 ]
             ],

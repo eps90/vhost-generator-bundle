@@ -59,6 +59,10 @@ class ApacheVHostNodeFactory implements NodeFactoryInterface
                 throw new MissingPropertyException($vhostNode, DocumentRootProperty::NAME);
             }
 
+            if (isset($nodeConfiguration['error_log'])) {
+                $vhostNode->setErrorLog($nodeConfiguration['error_log']);
+            }
+
             if (isset($nodeConfiguration['directories'])) {
                 $directoryNodes = $this->directoryNodeFactory->createNodes($nodeConfiguration['directories']);
                 foreach ($directoryNodes as $directoryNode) {
