@@ -2,7 +2,6 @@
 
 namespace Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory;
 
-use Eps\VhostGeneratorBundle\Generator\Property\PropertyInterface;
 use Eps\VhostGeneratorBundle\Generator\Property\StringProperty;
 
 /**
