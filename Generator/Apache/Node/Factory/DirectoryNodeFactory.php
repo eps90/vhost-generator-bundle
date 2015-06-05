@@ -32,6 +32,10 @@ class DirectoryNodeFactory implements NodeFactoryInterface
                 $directoryNode->setAllow($nodeConfiguration['allow']);
             }
 
+            if (isset($nodeConfiguration['deny'])) {
+                $directoryNode->setDeny($nodeConfiguration['deny']);
+            }
+
             if (isset($nodeConfiguration['allow_override'])) {
                 $directoryNode->setAllowOverride($nodeConfiguration['allow_override']);
             }

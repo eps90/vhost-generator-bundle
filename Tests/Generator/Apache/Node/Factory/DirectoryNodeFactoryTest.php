@@ -6,6 +6,7 @@ use Eps\VhostGeneratorBundle\Generator\Apache\Node\DirectoryNode;
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\Factory\DirectoryNodeFactory;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowOverrideProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\AllowProperty;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\DenyProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\OptionsProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\RequireProperty;
 use org\bovigo\vfs\vfsStream;
@@ -40,6 +41,7 @@ class DirectoryNodeFactoryTest extends \PHPUnit_Framework_TestCase
                             'All'
                         ],
                         'allow' => 'all',
+                        'deny' => 'all',
                         'options' => [
                             'ExecCGI',
                             'Indexes'
@@ -66,6 +68,10 @@ class DirectoryNodeFactoryTest extends \PHPUnit_Framework_TestCase
                     RequireProperty::NAME => [
                         'class' => 'Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\RequireProperty',
                         'value' => 'all granted'
+                    ],
+                    DenyProperty::NAME => [
+                        'class' => 'Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory\DenyProperty',
+                        'value' => 'from all'
                     ]
                 ]
             ],
