@@ -14,5 +14,3 @@
 - **Unit tests** - fix namespace. (*My IDE was not customized properly so test classes were generated with wrong ns)
 - **Directives**:
     - Logs (error/custom)
-    - Order
-    
