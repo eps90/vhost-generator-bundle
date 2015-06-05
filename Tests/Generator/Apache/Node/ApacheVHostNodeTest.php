@@ -4,6 +4,7 @@ namespace Eps\VhostGeneratorBundle\Tests\Generator\Apache\Node;
 
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\ApacheVHostNode;
 use Eps\VhostGeneratorBundle\Generator\Apache\Node\DirectoryNode;
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\CustomLogProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\DocumentRootProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ErrorLogProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerAliasProperty;
@@ -260,6 +261,9 @@ class ApacheVHostNodeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
+    /**
+     * @test
+     */
     public function itShouldBeAbletoAddErrorLogProperty()
     {
         $errorLogProperty = '/var/log/apache2/error.log';
@@ -273,5 +277,23 @@ class ApacheVHostNodeTest extends \PHPUnit_Framework_TestCase
             $errorLog
         );
         $this->assertEquals($errorLogProperty, $errorLog->getValue());
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldBeAbletoAddCustomLogProperty()
+    {
+        $customLogProperty = '/var/log/apache2/access.log';
+        $vhostNode = new ApacheVHostNode();
+        $vhostNode->setCustomLog($customLogProperty);
+
+        /** @var CustomLogProperty $customLog */
+        $customLog = $vhostNode->getProperties()[CustomLogProperty::NAME];
+        $this->assertInstanceOf(
+            'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\CustomLogProperty',
+            $customLog
+        );
+        $this->assertEquals('/var/log/apache2/access.log combined', $customLog->getValue());
     }
 }

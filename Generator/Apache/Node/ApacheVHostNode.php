@@ -2,6 +2,7 @@
 
 namespace Eps\VhostGeneratorBundle\Generator\Apache\Node;
 
+use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\CustomLogProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\DocumentRootProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ErrorLogProperty;
 use Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerAliasProperty;
@@ -160,6 +161,23 @@ class ApacheVHostNode implements NodeInterface
         }
 
         $this->addProperty(ErrorLogProperty::NAME, $errorLog, $this->properties);
+
+        return $this;
+    }
+
+    /**
+     * Sets path to custom logs
+     *
+     * @param string|CustomLogProperty $customLog
+     * @return self
+     */
+    public function setCustomLog($customLog)
+    {
+        if (!($customLog instanceof CustomLogProperty)) {
+            $customLog = new CustomLogProperty($customLog);
+        }
+
+        $this->addProperty(CustomLogProperty::NAME, $customLog, $this->properties);
 
         return $this;
     }
