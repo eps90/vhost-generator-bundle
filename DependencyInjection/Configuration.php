@@ -56,6 +56,7 @@ class Configuration implements ConfigurationInterface
                                                 ->end()
                                                 ->scalarNode('allow')->end()
                                                 ->scalarNode('deny')->end()
+                                                ->scalarNode('order')->end()
                                                 ->scalarNode('require')->end()
                                                 ->arrayNode('allow_override')
                                                     ->prototype('scalar')

@@ -40,6 +40,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                                             ],
                                             'deny' => 'all',
                                             'allow' => 'all',
+                                            'order' => 'allow deny',
                                             'require' => 'all granted',
                                             'options' => [
                                                 'Indexes'
