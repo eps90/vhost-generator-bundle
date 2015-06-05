@@ -38,6 +38,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                                             'allow_override' => [
                                                 'All'
                                             ],
+                                            'deny' => 'all',
                                             'allow' => 'all',
                                             'require' => 'all granted',
                                             'options' => [

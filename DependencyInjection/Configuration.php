@@ -55,6 +55,7 @@ class Configuration implements ConfigurationInterface
                                                     ->cannotBeEmpty()
                                                 ->end()
                                                 ->scalarNode('allow')->end()
+                                                ->scalarNode('deny')->end()
                                                 ->scalarNode('require')->end()
                                                 ->arrayNode('allow_override')
                                                     ->prototype('scalar')
