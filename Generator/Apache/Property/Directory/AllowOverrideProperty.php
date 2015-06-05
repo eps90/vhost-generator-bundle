@@ -8,7 +8,6 @@ use Eps\VhostGeneratorBundle\Generator\Property\MultipleOptionsProperty;
  * Class AllowOverrideProperty
  * @package Eps\VhostGeneratorBundle\Generator\Apache\Property\Directory
  * @author Jakub Turek <ja@kubaturek.pl>
- * @todo In case when string is input, try to detect correct value from acceptable ones
  */
 class AllowOverrideProperty extends MultipleOptionsProperty
 {
@@ -66,6 +65,7 @@ class AllowOverrideProperty extends MultipleOptionsProperty
         $includesNone = in_array(self::NONE, $options, true);
 
         foreach ($options as $option) {
+            $option = $this->detectOptionName($option);
             if ($option == self::ALL || $option == self::NONE) {
                 if ($includesAll && $includesNone) {
                     $result[] = self::ALL;
@@ -78,6 +78,31 @@ class AllowOverrideProperty extends MultipleOptionsProperty
         }
 
         $this->value = array_unique($result);
+    }
+
+    private function detectOptionName($option)
+    {
+        $availableValues = [
+            AllowOverrideProperty::ALL,
+            AllowOverrideProperty::NONE,
+            AllowOverrideProperty::AUTH_CONFIG,
+            AllowOverrideProperty::FILE_INFO,
+            AllowOverrideProperty::INDEXES,
+            AllowOverrideProperty::LIMIT,
+            AllowOverrideProperty::NONFATAL_ALL,
+            AllowOverrideProperty::NONFATAL_UNKNOWN,
+            AllowOverrideProperty::NONFATAL_OVERRIDE
+        ];
+
+        $option = preg_replace('/[\s_\-]/', '', $option);
+
+        foreach ($availableValues as $value) {
+            if (strtolower($value) == strtolower($option)) {
+                $option = $value;
+            }
+        }
+
+        return $option;
     }
 
     /**

@@ -166,4 +166,29 @@ class AllowOverridePropertyTest extends \PHPUnit_Framework_TestCase
         $actual = $property->getValue();
         $this->assertEquals($expected, $actual);
     }
+
+    public function toDetectValuesProvider()
+    {
+        return [
+            [
+                'options' => ['all'],
+                'expected' => [AllowOverrideProperty::ALL]
+            ],
+            [
+                'options' => ['auth_config'],
+                'expected' => [AllowOverrideProperty::AUTH_CONFIG]
+            ]
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider toDetectValuesProvider
+     */
+    public function itShouldAutomaticallyDetectConfigKey($options, $expected)
+    {
+        $allowOverrideProperty = new AllowOverrideProperty($options);
+        $this->assertEquals($expected, $allowOverrideProperty->getOptions());
+        $this->assertTrue($allowOverrideProperty->isValid());
+    }
 }
