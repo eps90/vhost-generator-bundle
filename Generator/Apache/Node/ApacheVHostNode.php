@@ -15,7 +15,6 @@ use Eps\VhostGeneratorBundle\Generator\Property\PropertyInterface;
  * Class ApacheVHostNode
  * @package Eps\VhostGeneratorBundle\Generator\Apache\Node
  * @author Jakub Turek <ja@kubaturek.pl>
- * @todo Allow to add log paths
  */
 class ApacheVHostNode implements NodeInterface
 {
