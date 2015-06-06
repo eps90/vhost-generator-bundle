@@ -7,6 +7,7 @@ use Eps\VhostGeneratorBundle\Util\SymfonyProcessFactory;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -57,6 +58,16 @@ class GenerateVHostCommand extends ContainerAwareCommand
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        $questionHelper = $this->getHelper('question');
+        $question = new ConfirmationQuestion(
+            "Warning: This command uses 'sudo' and 'a2ensite'. Do you want to continue?",
+            true
+        );
+
+        if (!$questionHelper->ask($input, $output, $question)) {
+            return false;
+        }
+
         $vhosts = $this->getContainer()->getParameter('vhost_generator.apache.vhosts');
         $vhostsPath = $this->getContainer()->getParameter('vhost_generator.apache.vhosts_path');
         $outputFile = $this->getContainer()->getParameter('vhost_generator.apache.output_file');

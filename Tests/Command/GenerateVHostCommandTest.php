@@ -4,6 +4,8 @@ namespace Command;
 
 use Eps\VhostGeneratorBundle\Command\GenerateVHostCommand;
 use Eps\VhostGeneratorBundle\Tests\Util\SymfonyProcessFactoryTest;
+use Symfony\Component\Console\Helper\HelperInterface;
+use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
@@ -101,9 +103,34 @@ class GenerateVHostCommandTest extends \PHPUnit_Framework_TestCase
         $command->setFileSystem($fileSystem);
         $command->setProcessFactory($processFactory);
 
+        $helpers = $this->getHelpers();
+        $helpers['question']->expects($this->once())
+            ->method('ask')
+            ->willReturn(true);
+
+        $command->setHelperSet(new HelperSet($helpers));
+
         $input = $this->getMock('Symfony\Component\Console\Input\InputInterface');
         $output = $this->getMock('Symfony\Component\Console\Output\OutputInterface');
 
         $command->run($input, $output);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject[]
+     */
+    private function getHelpers()
+    {
+        $helpers = [];
+
+        $questionHelper = $this->getMockBuilder('Symfony\Component\Console\Helper\HelperInterface')
+            ->setMethods(['getName', 'setHelperSet', 'getHelperSet', 'ask'])
+            ->getMock();
+        $questionHelper->expects($this->once())
+            ->method('getName')
+            ->willReturn('question');
+        $helpers['question'] = $questionHelper;
+
+        return $helpers;
     }
 }
