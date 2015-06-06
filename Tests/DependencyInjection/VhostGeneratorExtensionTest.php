@@ -126,4 +126,32 @@ class VhostGeneratorExtensionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($containerBuilder->has('vhost_generator.apache.formatter'));
     }
+
+    /**
+     * @test
+     */
+    public function itShouldHaveConfiguredCommandsAsServices()
+    {
+        $container = new ContainerBuilder();
+        $config = [];
+
+        $extension = new VhostGeneratorExtension();
+        $extension->load($config, $container);
+
+        $this->assertTrue($container->has('vhost_generator.apache.command.generate'));
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldHaveConfiguredProcessFactoryService()
+    {
+        $container = new ContainerBuilder();
+        $config = [];
+
+        $extension = new VhostGeneratorExtension();
+        $extension->load($config, $container);
+
+        $this->assertTrue($container->has('vhost_generator.process_factory'));
+    }
 }

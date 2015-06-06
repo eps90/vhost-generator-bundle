@@ -15,3 +15,13 @@ services:
 
   vhost_generator.apache.formatter:
     class: Eps\VhostGeneratorBundle\Generator\Apache\Formatter\ApacheVHostFormatter
+
+  vhost_generator.process_factory:
+    clas: Eps\VhostGeneratorBundle\Util\SymfonyProcessFactory
+
+  vhost_generator.apache.command.generate:
+    class: Eps\VhostGeneratorBundle\Command\GenerateVHostCommand
+    calls:
+      - ['setGenerator', [@vhost_generator.apache.generator]]
+      - ['setFilesystem', [@filesystem]]
+      - ['setProcessFactory', [@vhost_generator.process_factory]]
