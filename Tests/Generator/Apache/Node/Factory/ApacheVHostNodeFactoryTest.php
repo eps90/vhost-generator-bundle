@@ -197,6 +197,30 @@ class ApacheVHostNodeFactoryTest extends \PHPUnit_Framework_TestCase
                         'value' => $filesystem->url() . '/srv/www/data'
                     ]
                 ]
+            ],
+
+            'empty_server_aliases' => [
+                'config' => [
+                    [
+                        'ip_address' => '127.0.0.1',
+                        'server_name' => 'www.example.com',
+                        'server_aliases' => [],
+                        'document_root' => $filesystem->url() . '/srv/www/data'
+                    ]
+                ],
+                'attributes' => [
+                    ApacheVHostNode::ADDRESS => '127.0.0.1:80',
+                ],
+                'properties' => [
+                    ServerNameProperty::NAME => [
+                        'class' => 'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\ServerNameProperty',
+                        'value' => 'www.example.com',
+                    ],
+                    DocumentRootProperty::NAME => [
+                        'class' => 'Eps\VhostGeneratorBundle\Generator\Apache\Property\VHost\DocumentRootProperty',
+                        'value' => $filesystem->url() . '/srv/www/data'
+                    ]
+                ]
             ]
         ];
     }

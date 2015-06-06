@@ -49,7 +49,7 @@ class ApacheVHostNodeFactory implements NodeFactoryInterface
                 throw new MissingPropertyException($vhostNode, ServerNameProperty::NAME);
             }
 
-            if (isset($nodeConfiguration['server_aliases'])) {
+            if (isset($nodeConfiguration['server_aliases']) && !empty($nodeConfiguration['server_aliases'])) {
                 $vhostNode->setServerAliases($nodeConfiguration['server_aliases']);
             }
 
