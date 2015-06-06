@@ -4,7 +4,9 @@ namespace Eps\VhostGeneratorBundle\Command;
 
 use Eps\VhostGeneratorBundle\Generator\GeneratorInterface;
 use Eps\VhostGeneratorBundle\Util\SymfonyProcessFactory;
+use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Helper\FormatterHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
@@ -58,9 +60,12 @@ class GenerateVHostCommand extends ContainerAwareCommand
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        /** @var QuestionHelper $questionHelper */
         $questionHelper = $this->getHelper('question');
+        /** @var FormatterHelper $formatterHelper */
+        $formatterHelper = $this->getHelper('formatter');
         $question = new ConfirmationQuestion(
-            "Warning: This command uses 'sudo' and 'a2ensite'. Do you want to continue?",
+            $formatterHelper->formatBlock("Warning: This command uses 'sudo' and 'a2ensite'. Do you want to continue?", 'infor'),
             true
         );
 

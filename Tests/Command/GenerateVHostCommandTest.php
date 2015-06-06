@@ -107,6 +107,9 @@ class GenerateVHostCommandTest extends \PHPUnit_Framework_TestCase
         $helpers['question']->expects($this->once())
             ->method('ask')
             ->willReturn(true);
+        $helpers['formatter']->expects($this->once())
+            ->method('formatBlock')
+            ->willReturn('');
 
         $command->setHelperSet(new HelperSet($helpers));
 
@@ -130,6 +133,11 @@ class GenerateVHostCommandTest extends \PHPUnit_Framework_TestCase
             ->method('getName')
             ->willReturn('question');
         $helpers['question'] = $questionHelper;
+
+        $formatterHelper = $this->getMockBuilder('Symfony\Component\Console\Helper\HelperInterface')
+            ->setMethods(['getName', 'setHelperSet', 'getHelperSet', 'formatBlock'])
+            ->getMock();
+        $helpers['formatter'] = $formatterHelper;
 
         return $helpers;
     }
