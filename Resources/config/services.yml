@@ -25,3 +25,5 @@ services:
       - ['setGenerator', [@vhost_generator.apache.generator]]
       - ['setFilesystem', [@filesystem]]
       - ['setProcessFactory', [@vhost_generator.process_factory]]
+    tags:
+      - { name: console.command }
