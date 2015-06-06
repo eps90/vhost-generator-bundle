@@ -27,7 +27,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('apache')
                     ->children()
                         ->scalarNode('vhosts_path')->end()
-                        ->scalarNode('output_path')
+                        ->scalarNode('output_file')
                             ->isRequired()
                             ->cannotBeEmpty()
                         ->end()

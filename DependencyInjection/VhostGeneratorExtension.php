@@ -37,8 +37,8 @@ class VhostGeneratorExtension extends Extension
             $container->setParameter('vhost_generator.apache.vhosts_path', $config['apache']['vhosts_path']);
         }
 
-        if (isset($config['apache']['output_path'])) {
-            $container->setParameter('vhost_generator.apache.output_path', $config['apache']['output_path']);
+        if (isset($config['apache']['output_file'])) {
+            $container->setParameter('vhost_generator.apache.output_file', $config['apache']['output_file']);
         }
 
         if (isset($config['apache']['vhosts']) && !empty($config['apache']['vhosts'])) {

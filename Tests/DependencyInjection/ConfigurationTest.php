@@ -22,7 +22,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                     [
                         'apache' => [
                             'vhosts_path' => '/etc/apache2/sites-available',
-                            'output_path' => 'prod.conf',
+                            'output_file' => 'prod.conf',
                             'vhosts' => [
                                 [
                                     'server_name' => 'www.example.com',
@@ -59,7 +59,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                 'config' => [
                     [
                         'apache' => [
-                            'output_path' => 'prod.conf',
+                            'output_file' => 'prod.conf',
                             'vhosts' => [
                                 [
                                     'server_name' => 'www.example.com',
@@ -88,7 +88,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     public function invalidConfigProvider()
     {
         return [
-            'missing_output_path' => [
+            'missing_output_file' => [
                 'config' => [
                     [
                         'apache' => [
@@ -126,7 +126,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                     [
                         'apache' => [
                             'vhosts_path' => '/etc/apache2/sites-available',
-                            'output_path' => 'prod.conf',
+                            'output_file' => 'prod.conf',
                             'vhosts' => [
                                 [
                                     'server_aliases' => [
@@ -159,7 +159,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                     [
                         'apache' => [
                             'vhosts_path' => '/etc/apache2/sites-available',
-                            'output_path' => 'prod.conf',
+                            'output_file' => 'prod.conf',
                             'vhosts' => [
                                 [
                                     'server_name' => 'www.example.com',
@@ -192,7 +192,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                     [
                         'apache' => [
                             'vhosts_path' => '/etc/apache2/sites-available',
-                            'output_path' => 'prod.conf',
+                            'output_file' => 'prod.conf',
                             'vhosts' => [
                                 [
                                     'server_name' => 'www.example.com',

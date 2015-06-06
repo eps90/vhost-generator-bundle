@@ -23,7 +23,7 @@ class VhostGeneratorExtensionTest extends \PHPUnit_Framework_TestCase
             [
                 'apache' => [
                     'vhosts_path' => '/etc/apache2/sites-available',
-                    'output_path' => 'prod.conf',
+                    'output_file' => 'prod.conf',
                     'vhosts' => [
                         [
                             'server_name' => 'www.example.com',
@@ -54,7 +54,7 @@ class VhostGeneratorExtensionTest extends \PHPUnit_Framework_TestCase
 
         $extension->load($config, $containerBuilder);
         $this->assertEquals('/etc/apache2/sites-available', $containerBuilder->getParameter('vhost_generator.apache.vhosts_path'));
-        $this->assertEquals('prod.conf', $containerBuilder->getParameter('vhost_generator.apache.output_path'));
+        $this->assertEquals('prod.conf', $containerBuilder->getParameter('vhost_generator.apache.output_file'));
         $this->assertEquals(
             [
                 [
