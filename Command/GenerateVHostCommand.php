@@ -65,7 +65,7 @@ class GenerateVHostCommand extends ContainerAwareCommand
 
         $question = new ConfirmationQuestion(
             $formatterHelper->formatBlock(
-                "Warning: This command uses 'sudo', 'service' and 'a2ensite'. Do you want to continue? (Y/n): ",
+                "Warning: This command uses 'sudo', 'service' and 'a2ensite'. Do you want to continue? (Y/n):",
                 'question'
             ),
             true
@@ -107,7 +107,7 @@ class GenerateVHostCommand extends ContainerAwareCommand
      */
     private function executeShellCommand($command, OutputInterface $output)
     {
-        $output->write("<info>Executing '$command'... ");
+        $output->write("<comment>Executing '$command'... </comment>");
         $command = $this->processFactory->getProcess($command);
         $command->run();
         $output->writeln('<success>OK</success>');
