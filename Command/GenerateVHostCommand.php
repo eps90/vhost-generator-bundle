@@ -18,8 +18,6 @@ use Symfony\Component\Filesystem\Filesystem;
  * @author Jakub Turek <ja@kubaturek.pl>
  * @todo Add output messages
  * @todo Check whether commands ran successfully
- * @todo Add warning that command uses 'sudo' command
- * @todo Add warning that command uses 'a2ensite' command
  */
 class GenerateVHostCommand extends ContainerAwareCommand
 {
@@ -56,6 +54,7 @@ class GenerateVHostCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this->setName('vhost:generate');
+        $this->setDescription("Generate and apply VHost configuration file");
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -66,7 +65,7 @@ class GenerateVHostCommand extends ContainerAwareCommand
         $formatterHelper = $this->getHelper('formatter');
         $question = new ConfirmationQuestion(
             $formatterHelper->formatBlock(
-                "Warning: This command uses 'sudo', 'service' and 'a2ensite'. Do you want to continue?",
+                "Warning: This command uses 'sudo', 'service' and 'a2ensite'. Do you want to continue? (Y/n): ",
                 'question'
             ),
             true

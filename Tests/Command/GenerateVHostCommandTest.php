@@ -24,6 +24,7 @@ class GenerateVHostCommandTest extends \PHPUnit_Framework_TestCase
     {
         $command = new GenerateVHostCommand();
         $this->assertEquals('vhost:generate', $command->getName());
+        $this->assertNotEmpty($command->getDescription());
     }
 
     /**
