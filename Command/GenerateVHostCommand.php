@@ -110,6 +110,6 @@ class GenerateVHostCommand extends ContainerAwareCommand
         $output->write("<comment>Executing '$command'... </comment>");
         $command = $this->processFactory->getProcess($command);
         $command->run();
-        $output->writeln('<success>OK</success>');
+        $output->writeln('<info>OK</info>');
     }
 }
