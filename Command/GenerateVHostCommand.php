@@ -16,7 +16,6 @@ use Symfony\Component\Filesystem\Filesystem;
  * Class GenerateVHostCommand
  * @package Eps\VhostGeneratorBundle\Command
  * @author Jakub Turek <ja@kubaturek.pl>
- * @todo Add output messages
  * @todo Check whether commands ran successfully
  */
 class GenerateVHostCommand extends ContainerAwareCommand
@@ -84,17 +83,33 @@ class GenerateVHostCommand extends ContainerAwareCommand
         $filePath = $this->getTempFileName($configsContent);
 
         $this->fileSystem->dumpFile($filePath, $configsContent);
-        $copyCommand = $this->processFactory->getProcess("sudo cp $filePath $vhostsPath/$outputFile");
-        $enableCommand = $this->processFactory->getProcess("sudo a2ensite $outputFile");
-        $reloadCommand = $this->processFactory->getProcess("sudo service apache2 reload");
-
-        $copyCommand->run();
-        $enableCommand->run();
-        $reloadCommand->run();
+        $this->executeShellCommand("sudo cp $filePath $vhostsPath/$outputFile", $output);
+        $this->executeShellCommand("sudo a2ensite $outputFile", $output);
+        $this->executeShellCommand("sudo service apache2 reload", $output);
     }
 
+    /**
+     * Returns temporary file name for apache vhost
+     *
+     * @param $configsContent
+     * @return string
+     */
     private function getTempFileName($configsContent)
     {
         return sys_get_temp_dir() . '/vhost_' . substr(md5($configsContent), 0, 7);
+    }
+
+    /**
+     * Executes the command and outputs the status
+     *
+     * @param $command
+     * @param OutputInterface $output
+     */
+    private function executeShellCommand($command, OutputInterface $output)
+    {
+        $output->write("<info>Executing '$command'... ");
+        $command = $this->processFactory->getProcess($command);
+        $command->run();
+        $output->writeln('<success>OK</success>');
     }
 }
