@@ -65,7 +65,10 @@ class GenerateVHostCommand extends ContainerAwareCommand
         /** @var FormatterHelper $formatterHelper */
         $formatterHelper = $this->getHelper('formatter');
         $question = new ConfirmationQuestion(
-            $formatterHelper->formatBlock("Warning: This command uses 'sudo' and 'a2ensite'. Do you want to continue?", 'info'),
+            $formatterHelper->formatBlock(
+                "Warning: This command uses 'sudo', 'service' and 'a2ensite'. Do you want to continue?",
+                'question'
+            ),
             true
         );
 
