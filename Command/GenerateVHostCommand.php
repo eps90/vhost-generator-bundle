@@ -63,6 +63,7 @@ class GenerateVHostCommand extends ContainerAwareCommand
         $questionHelper = $this->getHelper('question');
         /** @var FormatterHelper $formatterHelper */
         $formatterHelper = $this->getHelper('formatter');
+
         $question = new ConfirmationQuestion(
             $formatterHelper->formatBlock(
                 "Warning: This command uses 'sudo', 'service' and 'a2ensite'. Do you want to continue? (Y/n): ",
@@ -72,7 +73,7 @@ class GenerateVHostCommand extends ContainerAwareCommand
         );
 
         if (!$questionHelper->ask($input, $output, $question)) {
-            return false;
+            return;
         }
 
         $vhosts = $this->getContainer()->getParameter('vhost_generator.apache.vhosts');
@@ -94,6 +95,6 @@ class GenerateVHostCommand extends ContainerAwareCommand
 
     private function getTempFileName($configsContent)
     {
-        return '/tmp/vhost_' . substr(md5($configsContent), 0, 7);
+        return sys_get_temp_dir() . '/vhost_' . substr(md5($configsContent), 0, 7);
     }
 }
