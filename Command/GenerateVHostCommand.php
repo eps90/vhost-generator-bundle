@@ -16,7 +16,6 @@ use Symfony\Component\Filesystem\Filesystem;
  * Class GenerateVHostCommand
  * @package Eps\VhostGeneratorBundle\Command
  * @author Jakub Turek <ja@kubaturek.pl>
- * @todo Check whether commands ran successfully
  */
 class GenerateVHostCommand extends ContainerAwareCommand
 {
@@ -138,6 +137,10 @@ class GenerateVHostCommand extends ContainerAwareCommand
 
         $command = $this->processFactory->getProcess($command);
         $command->run();
+
+        if (!$command->isSuccessful()) {
+            throw new \RuntimeException($command->getErrorOutput());
+        }
 
         if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERY_VERBOSE) {
             $output->writeln('');
