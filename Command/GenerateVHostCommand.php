@@ -81,6 +81,13 @@ class GenerateVHostCommand extends ContainerAwareCommand
 
         $output->write("<info>Generating vhost config contents...</info>");
         $configsContent = $this->generator->generate($vhosts);
+
+        if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERY_VERBOSE) {
+            $output->writeln('');
+            $output->writeln('<comment>Following config is going to be applied: </comment>');
+            $output->writeln($configsContent);
+        }
+
         $output->writeln('<info>OK</info>');
 
         $filePath = $this->getTempFileName($configsContent);
@@ -131,6 +138,12 @@ class GenerateVHostCommand extends ContainerAwareCommand
 
         $command = $this->processFactory->getProcess($command);
         $command->run();
+
+        if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERY_VERBOSE) {
+            $output->writeln('');
+            $output->write($command->getOutput());
+        }
+
         $output->writeln('<info>OK</info>');
     }
 }
