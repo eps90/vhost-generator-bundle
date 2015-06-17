@@ -39,6 +39,34 @@ class GenerateVHostCommandTest extends \PHPUnit_Framework_TestCase
             ->method('install');
 
         $helpers = $this->getHelpers();
+        $helpers['question']->expects($this->once())
+            ->method('ask')
+            ->willReturn(true);
+
+        $command = new GenerateVHostCommand();
+        $command->setHelperSet(new HelperSet($helpers));
+        $command->setInstaller($installer);
+
+        $input = $this->getMock('Symfony\Component\Console\Input\InputInterface');
+        $output = $this->getMock('Symfony\Component\Console\Output\OutputInterface');
+
+        $command->run($input, $output);
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldDoNothingIfUserDoesNotAcceptConfirmation()
+    {
+        $helpers = $this->getHelpers();
+        $helpers['question']->expects($this->once())
+            ->method('ask')
+            ->willReturn(false);
+
+
+        $installer = $this->getMock('Eps\VhostGeneratorBundle\Installer\InstallerInterface');
+        $installer->expects($this->never())
+            ->method('install');
 
         $command = new GenerateVHostCommand();
         $command->setHelperSet(new HelperSet($helpers));
@@ -63,9 +91,6 @@ class GenerateVHostCommandTest extends \PHPUnit_Framework_TestCase
         $questionHelper->expects($this->once())
             ->method('getName')
             ->willReturn('question');
-        $questionHelper->expects($this->once())
-            ->method('ask')
-            ->willReturn(true);
         $helpers['question'] = $questionHelper;
 
         $formatterHelper = $this->getMockBuilder('Symfony\Component\Console\Helper\HelperInterface')
