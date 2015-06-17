@@ -17,6 +17,8 @@ use Symfony\Component\Process\ProcessBuilder;
  */
 class GenerateVHostCommandTest extends \PHPUnit_Framework_TestCase
 {
+    private $processesCounter = 0;
+
     /**
      * @test
      */
@@ -42,20 +44,24 @@ class GenerateVHostCommandTest extends \PHPUnit_Framework_TestCase
         $tmpFilePath = '/tmp/vhost_a24b250';
         $outputFile = 'prod.conf';
 
-
         $container = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
-        $container->expects($this->at(0))
-            ->method('getParameter')
-            ->with('vhost_generator.apache.vhosts')
-            ->willReturn($sampleConfig);
-        $container->expects($this->at(1))
-            ->method('getParameter')
-            ->with('vhost_generator.apache.vhosts_path')
-            ->willReturn($vhostsPath);
-        $container->expects($this->at(2))
-            ->method('getParameter')
-            ->with('vhost_generator.apache.output_file')
-            ->willReturn('prod.conf');
+
+        $containerParams = [
+            [
+                'name' => 'vhost_generator.apache.vhosts',
+                'value' => $sampleConfig
+            ],
+            [
+                'name' => 'vhost_generator.apache.vhosts_path',
+                'value' => $vhostsPath,
+            ],
+            [
+                'name' => 'vhost_generator.apache.output_file',
+                'value' => $outputFile
+            ]
+        ];
+
+        $this->mockContainerParameters($container, $containerParams);
 
         $generator = $this->getMock('Eps\VhostGeneratorBundle\Generator\GeneratorInterface');
         $generator->expects($this->once())
@@ -68,53 +74,18 @@ class GenerateVHostCommandTest extends \PHPUnit_Framework_TestCase
             ->method('dumpFile')
             ->with($tmpFilePath, $generatedConfig);
 
-        $processOne = $this->getMockBuilder('Symfony\Component\Process\Process')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $processOne->expects($this->atLeastOnce())
-            ->method('isSuccessful')
-            ->willReturn(true);
-
-        $processTwo = clone $processOne;
-        $processThree = clone $processOne;
-
         $processFactory = $this->getMock('Eps\VhostGeneratorBundle\Util\SymfonyProcessFactory');
-        $processFactory->expects($this->at(0))
-            ->method('getProcess')
-            ->with("sudo cp $tmpFilePath {$vhostsPath}/$outputFile")
-            ->willReturn($processOne);
+        $this->expectProcess($processFactory, "sudo cp $tmpFilePath {$vhostsPath}/$outputFile", true);
+        $this->expectProcess($processFactory, "sudo a2ensite $outputFile", true);
+        $this->expectProcess($processFactory, 'sudo service apache2 reload', true);
 
-        $processFactory->expects($this->at(1))
-            ->method('getProcess')
-            ->with("sudo a2ensite $outputFile")
-            ->willReturn($processTwo);
-
-        $processFactory->expects($this->at(2))
-            ->method('getProcess')
-            ->with('sudo service apache2 reload')
-            ->willReturn($processThree);
-
-        $processOne->expects($this->once())
-            ->method('run');
-        $processTwo->expects($this->once())
-            ->method('run');
-        $processThree->expects($this->once())
-            ->method('run');
+        $helpers = $this->getHelpers();
 
         $command = new GenerateVHostCommand();
         $command->setContainer($container);
         $command->setGenerator($generator);
         $command->setFileSystem($fileSystem);
         $command->setProcessFactory($processFactory);
-
-        $helpers = $this->getHelpers();
-        $helpers['question']->expects($this->once())
-            ->method('ask')
-            ->willReturn(true);
-        $helpers['formatter']->expects($this->once())
-            ->method('formatBlock')
-            ->willReturn('');
-
         $command->setHelperSet(new HelperSet($helpers));
 
         $input = $this->getMock('Symfony\Component\Console\Input\InputInterface');
@@ -141,18 +112,22 @@ class GenerateVHostCommandTest extends \PHPUnit_Framework_TestCase
 
 
         $container = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
-        $container->expects($this->at(0))
-            ->method('getParameter')
-            ->with('vhost_generator.apache.vhosts')
-            ->willReturn($sampleConfig);
-        $container->expects($this->at(1))
-            ->method('getParameter')
-            ->with('vhost_generator.apache.vhosts_path')
-            ->willReturn($vhostsPath);
-        $container->expects($this->at(2))
-            ->method('getParameter')
-            ->with('vhost_generator.apache.output_file')
-            ->willReturn('prod.conf');
+        $containerParams = [
+            [
+                'name' => 'vhost_generator.apache.vhosts',
+                'value' => $sampleConfig
+            ],
+            [
+                'name' => 'vhost_generator.apache.vhosts_path',
+                'value' => $vhostsPath,
+            ],
+            [
+                'name' => 'vhost_generator.apache.output_file',
+                'value' => $outputFile
+            ]
+        ];
+
+        $this->mockContainerParameters($container, $containerParams);
 
         $generator = $this->getMock('Eps\VhostGeneratorBundle\Generator\GeneratorInterface');
         $generator->expects($this->once())
@@ -165,36 +140,16 @@ class GenerateVHostCommandTest extends \PHPUnit_Framework_TestCase
             ->method('dumpFile')
             ->with($tmpFilePath, $generatedConfig);
 
-        $processOne = $this->getMockBuilder('Symfony\Component\Process\Process')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $processOne->expects($this->atLeastOnce())
-            ->method('isSuccessful')
-            ->willReturn(false);
-
         $processFactory = $this->getMock('Eps\VhostGeneratorBundle\Util\SymfonyProcessFactory');
-        $processFactory->expects($this->at(0))
-            ->method('getProcess')
-            ->with("sudo cp $tmpFilePath {$vhostsPath}/$outputFile")
-            ->willReturn($processOne);
+        $this->expectProcess($processFactory, "sudo cp $tmpFilePath {$vhostsPath}/$outputFile", false);
 
-        $processOne->expects($this->once())
-            ->method('run');
+        $helpers = $this->getHelpers();
 
         $command = new GenerateVHostCommand();
         $command->setContainer($container);
         $command->setGenerator($generator);
         $command->setFileSystem($fileSystem);
         $command->setProcessFactory($processFactory);
-
-        $helpers = $this->getHelpers();
-        $helpers['question']->expects($this->once())
-            ->method('ask')
-            ->willReturn(true);
-        $helpers['formatter']->expects($this->once())
-            ->method('formatBlock')
-            ->willReturn('');
-
         $command->setHelperSet(new HelperSet($helpers));
 
         $input = $this->getMock('Symfony\Component\Console\Input\InputInterface');
@@ -216,13 +171,46 @@ class GenerateVHostCommandTest extends \PHPUnit_Framework_TestCase
         $questionHelper->expects($this->once())
             ->method('getName')
             ->willReturn('question');
+        $questionHelper->expects($this->once())
+            ->method('ask')
+            ->willReturn(true);
         $helpers['question'] = $questionHelper;
 
         $formatterHelper = $this->getMockBuilder('Symfony\Component\Console\Helper\HelperInterface')
             ->setMethods(['getName', 'setHelperSet', 'getHelperSet', 'formatBlock'])
             ->getMock();
+        $formatterHelper->expects($this->once())
+            ->method('formatBlock')
+            ->willReturn('');
         $helpers['formatter'] = $formatterHelper;
 
         return $helpers;
+    }
+
+    private function expectProcess(\PHPUnit_Framework_MockObject_MockObject $processFactory, $command, $isSuccessful)
+    {
+        $process = $this->getMockBuilder('Symfony\Component\Process\Process')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $process->expects($this->atLeastOnce())
+            ->method('isSuccessful')
+            ->willReturn($isSuccessful);
+        $process->expects($this->once())
+            ->method('run');
+
+        $processFactory->expects($this->at($this->processesCounter++))
+            ->method('getProcess')
+            ->with($command)
+            ->willReturn($process);
+    }
+
+    private function mockContainerParameters(\PHPUnit_Framework_MockObject_MockObject $container, array $containerParams)
+    {
+        for ($i = 0; $i < count($containerParams); $i++) {
+            $container->expects($this->at($i))
+                ->method('getParameter')
+                ->with($containerParams[$i]['name'])
+                ->willReturn($containerParams[$i]['value']);
+        }
     }
 }
