@@ -19,6 +19,18 @@ services:
   vhost_generator.process_factory:
     class: Eps\VhostGeneratorBundle\Util\SymfonyProcessFactory
 
+  vhost_generator.installer.apache.linux:
+    class: Eps\VhostGeneratorBundle\Installer\Apache\LinuxInstaller
+    arguments:
+      - @filesystem
+      - @vhost_generator.process_factory
+    calls:
+      - [setGenerator, [@vhost_generator.apache.generator]]
+      - [setVHosts, [%vhost_generator.apache.vhosts%]]
+      - [setVHostsPath, [%vhost_generator.apache.vhosts_path%]]
+      - [setOutputFile, [%vhost_generator.apache.output_file%]]
+
+
   vhost_generator.apache.command.generate:
     class: Eps\VhostGeneratorBundle\Command\GenerateVHostCommand
     calls:
