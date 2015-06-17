@@ -9,6 +9,9 @@ namespace Eps\VhostGeneratorBundle\Util;
  */
 class OperatingSystem 
 {
+    const LINUX = 'Linux';
+    const UNKNOWN = 'Unknown';
+
     /**
      * Returns PHP_OS constant contents
      *
