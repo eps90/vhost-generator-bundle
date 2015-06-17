@@ -1,6 +1,6 @@
 <?php
 
-namespace DependencyInjection;
+namespace Eps\VhostGeneratorBundle\Tests\DependencyInjection;
 
 use Eps\VhostGeneratorBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Command;
+namespace Eps\VhostGeneratorBundle\Tests\Command;
 
 use Eps\VhostGeneratorBundle\Command\GenerateVHostCommand;
 use Eps\VhostGeneratorBundle\Tests\Util\SymfonyProcessFactoryTest;
