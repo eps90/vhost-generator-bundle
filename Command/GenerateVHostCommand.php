@@ -2,16 +2,13 @@
 
 namespace Eps\VhostGeneratorBundle\Command;
 
-use Eps\VhostGeneratorBundle\Generator\GeneratorInterface;
 use Eps\VhostGeneratorBundle\Installer\InstallerInterface;
-use Eps\VhostGeneratorBundle\Util\SymfonyProcessFactory;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\FormatterHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
-use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Class GenerateVHostCommand
@@ -56,15 +53,5 @@ class GenerateVHostCommand extends ContainerAwareCommand
         }
 
         $this->installer->install();
-
-//        $output->write("<info>Generating vhost config contents...</info>");
-
-//        if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERY_VERBOSE) {
-//            $output->writeln('');
-//            $output->writeln('<comment>Following config is going to be applied: </comment>');
-//            $output->writeln($configsContent);
-//        }
-
-//        $output->writeln('<info>OK</info>');
     }
 }
