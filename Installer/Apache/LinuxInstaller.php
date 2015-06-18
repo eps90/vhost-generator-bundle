@@ -12,7 +12,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @package Eps\VhostGeneratorBundle\Installer\Apache
  * @author Jakub Turek <ja@kubaturek.pl>
  */
-class LinuxInstaller implements InstallerInterface
+class LinuxInstaller implements ApacheInstallerInterface
 {
     /**
      * @var Filesystem
