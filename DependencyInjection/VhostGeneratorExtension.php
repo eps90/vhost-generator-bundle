@@ -16,14 +16,7 @@ class VhostGeneratorExtension extends Extension
 {
 
     /**
-     * Loads a specific configuration.
-     *
-     * @param array $configs An array of configuration values
-     * @param ContainerBuilder $container A ContainerBuilder instance
-     *
-     * @throws \InvalidArgumentException When provided tag is not defined in this extension
-     *
-     * @api
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -37,15 +30,15 @@ class VhostGeneratorExtension extends Extension
         $loader->load('utils.yml');
 
         if (isset($config['apache']['vhosts_path'])) {
-            $container->setParameter('vhost_generator.apache.vhosts_path', $config['apache']['vhosts_path']);
+            $container->setParameter('eps.vhost_generator.apache.vhosts_path', $config['apache']['vhosts_path']);
         }
 
         if (isset($config['apache']['output_file'])) {
-            $container->setParameter('vhost_generator.apache.output_file', $config['apache']['output_file']);
+            $container->setParameter('eps.vhost_generator.apache.output_file', $config['apache']['output_file']);
         }
 
         if (isset($config['apache']['vhosts']) && !empty($config['apache']['vhosts'])) {
-            $container->setParameter('vhost_generator.apache.vhosts', $config['apache']['vhosts']);
+            $container->setParameter('eps.vhost_generator.apache.vhosts', $config['apache']['vhosts']);
         }
     }
 }

@@ -53,8 +53,18 @@ class VhostGeneratorExtensionTest extends \PHPUnit_Framework_TestCase
         ];
 
         $extension->load($config, $containerBuilder);
-        $this->assertEquals('/etc/apache2/sites-available', $containerBuilder->getParameter('vhost_generator.apache.vhosts_path'));
-        $this->assertEquals('prod.conf', $containerBuilder->getParameter('vhost_generator.apache.output_file'));
+        $this->assertEquals(
+            '/etc/apache2/sites-available',
+            $containerBuilder->getParameter(
+                'eps.vhost_generator.apache.vhosts_path'
+            )
+        );
+        $this->assertEquals(
+            'prod.conf',
+            $containerBuilder->getParameter(
+                'eps.vhost_generator.apache.output_file'
+            )
+        );
         $this->assertEquals(
             [
                 [
@@ -80,7 +90,7 @@ class VhostGeneratorExtensionTest extends \PHPUnit_Framework_TestCase
                     ]
                 ]
             ],
-            $containerBuilder->getParameter('vhost_generator.apache.vhosts')
+            $containerBuilder->getParameter('eps.vhost_generator.apache.vhosts')
         );
     }
 
@@ -95,8 +105,8 @@ class VhostGeneratorExtensionTest extends \PHPUnit_Framework_TestCase
         $extension = new VhostGeneratorExtension();
         $extension->load($config, $containerBuilder);
 
-        $this->assertTrue($containerBuilder->has('vhost_generator.apache.vhost_node_factory'));
-        $this->assertTrue($containerBuilder->has('vhost_generator.apache.directory_node_factory'));
+        $this->assertTrue($containerBuilder->has('eps.vhost_generator.apache.vhost_node_factory'));
+        $this->assertTrue($containerBuilder->has('eps.vhost_generator.apache.directory_node_factory'));
     }
 
     /**
@@ -110,7 +120,7 @@ class VhostGeneratorExtensionTest extends \PHPUnit_Framework_TestCase
         $extension = new VhostGeneratorExtension();
         $extension->load($config, $containerBuilder);
 
-        $this->assertTrue($containerBuilder->has('vhost_generator.apache.generator'));
+        $this->assertTrue($containerBuilder->has('eps.vhost_generator.apache.generator'));
     }
 
     /**
@@ -124,7 +134,7 @@ class VhostGeneratorExtensionTest extends \PHPUnit_Framework_TestCase
         $extension = new VhostGeneratorExtension();
         $extension->load($config, $containerBuilder);
 
-        $this->assertTrue($containerBuilder->has('vhost_generator.apache.formatter'));
+        $this->assertTrue($containerBuilder->has('eps.vhost_generator.apache.formatter'));
     }
 
     /**
@@ -138,7 +148,7 @@ class VhostGeneratorExtensionTest extends \PHPUnit_Framework_TestCase
         $extension = new VhostGeneratorExtension();
         $extension->load($config, $container);
 
-        $this->assertTrue($container->has('vhost_generator.apache.command.generate'));
+        $this->assertTrue($container->has('eps.vhost_generator.apache.command.generate'));
     }
 
     /**
@@ -152,9 +162,9 @@ class VhostGeneratorExtensionTest extends \PHPUnit_Framework_TestCase
         $extension = new VhostGeneratorExtension();
         $extension->load($config, $container);
 
-        $this->assertTrue($container->has('vhost_generator.process_factory'));
-        $this->assertTrue($container->has('vhost_generator.operating_system'));
-        $this->assertTrue($container->has('vhost_generator.os_detector'));
+        $this->assertTrue($container->has('eps.vhost_generator.process_factory'));
+        $this->assertTrue($container->has('eps.vhost_generator.operating_system'));
+        $this->assertTrue($container->has('eps.vhost_generator.os_detector'));
     }
 
     /**
@@ -168,8 +178,8 @@ class VhostGeneratorExtensionTest extends \PHPUnit_Framework_TestCase
         $extension = new VhostGeneratorExtension();
         $extension->load($config, $container);
 
-        $this->assertTrue($container->has('vhost_generator.installer.apache.factory'));
-        $this->assertTrue($container->has('vhost_generator.installer.apache'));
-        $this->assertTrue($container->has('vhost_generator.installer.apache.linux'));
+        $this->assertTrue($container->has('eps.vhost_generator.installer.apache.factory'));
+        $this->assertTrue($container->has('eps.vhost_generator.installer.apache'));
+        $this->assertTrue($container->has('eps.vhost_generator.installer.apache.linux'));
     }
 }

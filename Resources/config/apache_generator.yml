@@ -1,17 +1,17 @@
 services:
-  vhost_generator.apache.vhost_node_factory:
+  eps.vhost_generator.apache.vhost_node_factory:
     class: Eps\VhostGeneratorBundle\Generator\Apache\Node\Factory\ApacheVHostNodeFactory
     arguments:
-      - @vhost_generator.apache.directory_node_factory
+      - @eps.vhost_generator.apache.directory_node_factory
 
-  vhost_generator.apache.directory_node_factory:
+  eps.vhost_generator.apache.directory_node_factory:
     class: Eps\VhostGeneratorBundle\Generator\Apache\Node\Factory\DirectoryNodeFactory
 
-  vhost_generator.apache.formatter:
+  eps.vhost_generator.apache.formatter:
     class: Eps\VhostGeneratorBundle\Generator\Apache\Formatter\ApacheVHostFormatter
 
-  vhost_generator.apache.generator:
+  eps.vhost_generator.apache.generator:
     class: Eps\VhostGeneratorBundle\Generator\Apache\ApacheGenerator
     arguments:
-      - @vhost_generator.apache.vhost_node_factory
-      - @vhost_generator.apache.formatter
+      - @eps.vhost_generator.apache.vhost_node_factory
+      - @eps.vhost_generator.apache.formatter

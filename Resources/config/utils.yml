@@ -1,11 +1,11 @@
 services:
-  vhost_generator.process_factory:
+  eps.vhost_generator.process_factory:
     class: Eps\VhostGeneratorBundle\Util\SymfonyProcessFactory
 
-  vhost_generator.operating_system:
+  eps.vhost_generator.operating_system:
     class: Eps\VhostGeneratorBundle\Util\OperatingSystem
 
-  vhost_generator.os_detector:
+  eps.vhost_generator.os_detector:
     class: Eps\VhostGeneratorBundle\Util\OsDetector
     arguments:
-      - @vhost_generator.operating_system
+      - @eps.vhost_generator.operating_system

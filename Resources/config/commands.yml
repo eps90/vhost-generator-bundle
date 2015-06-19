@@ -1,7 +1,7 @@
 services:
-  vhost_generator.apache.command.generate:
+  eps.vhost_generator.apache.command.generate:
     class: Eps\VhostGeneratorBundle\Command\GenerateVHostCommand
     calls:
-      - [setInstaller, [@vhost_generator.installer.apache]]
+      - [setInstaller, [@eps.vhost_generator.installer.apache]]
     tags:
       - { name: console.command }
