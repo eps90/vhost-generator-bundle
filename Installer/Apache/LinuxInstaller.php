@@ -3,7 +3,6 @@
 namespace Eps\VhostGeneratorBundle\Installer\Apache;
 
 use Eps\VhostGeneratorBundle\Generator\GeneratorInterface;
-use Eps\VhostGeneratorBundle\Installer\InstallerInterface;
 use Eps\VhostGeneratorBundle\Util\SymfonyProcessFactory;
 use Symfony\Component\Filesystem\Filesystem;
 

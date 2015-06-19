@@ -2,8 +2,6 @@
 
 namespace Eps\VhostGeneratorBundle\Installer;
 
-use Eps\VhostGeneratorBundle\Generator\GeneratorInterface;
-
 /**
  * Interface InstallerInterface
  * @package Eps\VhostGeneratorBundle\Installer
