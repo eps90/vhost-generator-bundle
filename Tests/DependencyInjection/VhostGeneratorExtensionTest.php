@@ -144,7 +144,7 @@ class VhostGeneratorExtensionTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function itShouldHaveConfiguredProcessFactoryService()
+    public function itShouldHaveConfiguredUtilsServices()
     {
         $container = new ContainerBuilder();
         $config = [];
@@ -153,5 +153,23 @@ class VhostGeneratorExtensionTest extends \PHPUnit_Framework_TestCase
         $extension->load($config, $container);
 
         $this->assertTrue($container->has('vhost_generator.process_factory'));
+        $this->assertTrue($container->has('vhost_generator.operating_system'));
+        $this->assertTrue($container->has('vhost_generator.os_detector'));
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldHaveConfiguredInstallers()
+    {
+        $container = new ContainerBuilder();
+        $config = [];
+
+        $extension = new VhostGeneratorExtension();
+        $extension->load($config, $container);
+
+        $this->assertTrue($container->has('vhost_generator.installer.apache.factory'));
+        $this->assertTrue($container->has('vhost_generator.installer.apache'));
+        $this->assertTrue($container->has('vhost_generator.installer.apache.linux'));
     }
 }
