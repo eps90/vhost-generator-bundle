@@ -1,0 +1,26 @@
+services:
+  # Generic
+  vhost_generator.installer.apache.factory:
+    class: Eps\VhostGeneratorBundle\Installer\Apache\ApacheInstallerFactory
+    arguments:
+      - @vhost_generator.os_detector
+    tags:
+      - { name: vhost_installer_factory, server: apache }
+
+  vhost_generator.installer.apache:
+    class: Eps\VhostGeneratorBundle\Installer\InstallerInterface
+    factory: [@vhost_generator.installer.apache.factory, 'getInstaller']
+
+  # Installers
+  vhost_generator.installer.apache.linux:
+    class: Eps\VhostGeneratorBundle\Installer\Apache\LinuxInstaller
+    arguments:
+      - @filesystem
+      - @vhost_generator.process_factory
+    calls:
+      - [setGenerator, [@vhost_generator.apache.generator]]
+      - [setVHosts, [%vhost_generator.apache.vhosts%]]
+      - [setVHostsPath, [%vhost_generator.apache.vhosts_path%]]
+      - [setOutputFile, [%vhost_generator.apache.output_file%]]
+    tags:
+      - { name: vhost_installer.apache, os: linux }

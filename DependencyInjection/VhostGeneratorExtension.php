@@ -31,7 +31,10 @@ class VhostGeneratorExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.yml');
+        $loader->load('apache_generator.yml');
+        $loader->load('commands.yml');
+        $loader->load('installers.yml');
+        $loader->load('utils.yml');
 
         if (isset($config['apache']['vhosts_path'])) {
             $container->setParameter('vhost_generator.apache.vhosts_path', $config['apache']['vhosts_path']);
