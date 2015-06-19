@@ -14,7 +14,7 @@ interface InstallerFactoryInterface
      *
      * @return InstallerInterface
      */
-    public static function getInstaller();
+    public function getInstaller();
 
     /**
      * Adds an installer for given operating system
